@@ -19,6 +19,7 @@ app.use("/auth", proxy("http://localhost:8001"));
 app.use("/user", proxy("http://localhost:8002"));
 app.use("/job", proxy("http://localhost:8003"));
 app.use("/chat", proxy("http://localhost:8004"));
+app.use("/payment", proxy("http://localhost:8005"));
  
 app.listen(PORT, () => {
   console.log(`Gateway is listening on port: ${PORT}`);

@@ -21,6 +21,10 @@ export const skillRoutes = (dependencies: IDependencies) => {
     getAllCategoryForDropDown,
     inviteFreelancer,
     getJobInvites,
+    createJobOffer,
+    getJobOfferByFreelancerId,
+    updateJobOfferStatus,
+    getJobOfferByClientId,
   } = controllers(dependencies);
 
   const router = Router();
@@ -45,6 +49,10 @@ export const skillRoutes = (dependencies: IDependencies) => {
     .route("/invite-freelancer")
     .post(checkTokenAndRole(["client"]), inviteFreelancer);
   router.route("/job-invites/:freelancerId").get(getJobInvites);
+  router.route("/createJobOffer").post(createJobOffer);
+  router.route("/getOffers/:freelancerId").get(getJobOfferByFreelancerId);
+  router.route("/getClientOffers/:clientId").get(getJobOfferByClientId);
+  router.route("/update-status").patch(updateJobOfferStatus);
 
   return router;
 };

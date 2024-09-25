@@ -41,3 +41,5 @@ __exportStar(require("./getFreelancerByIdRepository"), exports);
 __exportStar(require("./jobInvitesRepository"), exports);
 __exportStar(require("./getInvitedFreelancersRepository"), exports);
 __exportStar(require("./updateJobInviteRepository"), exports);
+__exportStar(require("./getAllClientsRepository"), exports);
+__exportStar(require("./getClientByIdRepository"), exports);

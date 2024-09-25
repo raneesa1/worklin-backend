@@ -24,3 +24,5 @@ export * from "./IGetFreelancerByIdUseCase";
 export * from "./IProcessInviteUseCase";
 export * from "./IGetInvitedFreelancersUseCase";
 export * from "./IUpdateJobInvitesUseCase";
+export * from "./IGetAllClientsUseCase";
+export * from "./IGetClientByIdUseCase";

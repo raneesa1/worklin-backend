@@ -6,6 +6,8 @@ import {
   IApplyJobPostUseCase,
   IDeleteEducationById,
   IDeleteExperienceById,
+  IGetAllClientsUseCase,
+  IGetClientByIdUseCase,
   IGetEducationUseCase,
   IGetExperienceUseCase,
   IGetFreelancerByIdUseCase,
@@ -76,6 +78,9 @@ export interface IUseCases {
   getFreelancerByIdUseCase: (
     dependencies: IDependencies
   ) => IGetFreelancerByIdUseCase;
+  getClientByIdUseCase: (
+    dependencies: IDependencies
+  ) => IGetClientByIdUseCase
   processInviteUseCase: (dependencies: IDependencies) => IProcessInviteUseCase;
   getInvitedFreelancersUseCase: (
     dependencies: IDependencies
@@ -83,4 +88,5 @@ export interface IUseCases {
   updateJobInvitesUseCase: (
     dependencies: IDependencies
   ) => IUpdateJobInvitesUseCase;
+  getAllClientsUseCase: (dependencies: IDependencies) => IGetAllClientsUseCase;
 }

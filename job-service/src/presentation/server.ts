@@ -3,13 +3,11 @@ import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import { skillRoutes } from "../infrastructure/routes/jobRoutes";
-// import { userRoutes } from "../infrastructure/routes/authRoutes";
-// import { consumeMessages } from "../infrastructure/rabbitmq/consumer";
-// import { connectRabbitMQ } from "../infrastructure/rabbitmq/rabbit.config";
 import { dependencies } from "../config/dependencies";
 import { connectRabbitMQ } from "../infrastructure/rabbitMq/rabbit.config";
 import { consumeJobApplications } from "../infrastructure/rabbitMq/consumer";
 import { consumeJobInviteUpdates } from "../infrastructure/rabbitMq/consumeJobInviteUpdates";
+import { scheduleOfferDeletion } from "../infrastructure/database/mongoDB/model/jobOfferModel";
 // import { consumeJobRequests } from "../infrastructure/rabbitMq/consumeJobRequests";
 
 dotenv.config();
@@ -44,6 +42,8 @@ const startServer = async () => {
     await connectRabbitMQ();
     await consumeJobApplications("jobApplicationQueue", dependencies);
     await consumeJobInviteUpdates("jobApplicationQueue", dependencies);
+    scheduleOfferDeletion();
+
     app.listen(PORT, () => {
       console.log(`Job service running on port ${PORT}`);
     });

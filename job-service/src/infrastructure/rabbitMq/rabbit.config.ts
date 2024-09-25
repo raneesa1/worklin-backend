@@ -17,8 +17,12 @@ export async function connectRabbitMQ(): Promise<void> {
       await channel.assertExchange("userManagementExchange", "direct", {
         durable: true,
       });
-      console.log("Exchange 'userManagementExchange' declared.");
+      await channel.assertExchange("paymentManagementExchange", "direct", {
+        durable: true,
+      });
+      console.log(`Exchange paymentManagementExchange declared.`);
     }
+    console.log("Exchange 'userManagementExchange' declared.");
   } catch (error) {
     console.error("Error connecting to RabbitMQ:", error);
     throw error;

@@ -12,4 +12,7 @@ export * from "./IGetJobPostUseCase";
 export * from "./IGetAllCategoryForDropDownUseCase";
 export * from "./IInviteFreelancerUseCase";
 export * from "./IGetJobInvitesUseCase";
+export * from "./ICreateJobOfferUseCase";
+export * from "./IGetJobOfferByIdUseCase";
+export * from "./IUpdateStatusJobOfferUseCase";
 

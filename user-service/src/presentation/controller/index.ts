@@ -12,17 +12,19 @@ import { setProfileDataController } from "./setProfileDataController";
 import { saveRoleController } from "./saveRoleController";
 import { updateEducationController } from "./education/updateEducation";
 import { updateExperienceController } from "./experience/updateExperience";
-import { getFreelancersController } from "./getFreelancers";
+import { getFreelancersController } from "./getFreelancersController";
 import { saveFreelancerSkillsAndCategory } from "../../infrastructure/database/mongoDb/repositories/saveFreelancerSkillsAndCategory";
 import { saveSkillsController } from "./saveSkillsController";
 import { postProfileController } from "./postProfileController";
 import { applyJobPostUseCase } from "../../application/useCases";
 import { applyJobPostController } from "./applyJobPost";
-import { getSavedJobsController } from "./getSavedJobs";
-import { saveJobController } from "./saveJob";
-import { getFreelancerByIdController } from "./getFreelancerById";
-import { getInvitedFreelancersController } from "./getInvitedFreelancers";
+import { getSavedJobsController } from "./getSavedJobsController";
+import { saveJobController } from "./saveJobController";
+import { getFreelancerByIdController } from "./getFreelancerByIdController";
+import { getInvitedFreelancersController } from "./getInvitedFreelancersController";
 import { updateJobInvitesController } from "./updateJobInvitesController";
+import { getAllClientsController } from "./getAllClientsController";
+import { getClientByIdController } from "./getClientByIdController";
 
 export const controllers = (dependencies: IDependencies) => {
   return {
@@ -49,5 +51,7 @@ export const controllers = (dependencies: IDependencies) => {
     getFreelancerId: getFreelancerByIdController(dependencies),
     getInvitedFreelancer: getInvitedFreelancersController(dependencies),
     updateJobInvite: updateJobInvitesController(dependencies),
+    getAllClient: getAllClientsController(dependencies),
+    getClientById: getClientByIdController(dependencies),
   };
 };

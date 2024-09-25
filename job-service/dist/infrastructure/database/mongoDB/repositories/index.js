@@ -35,3 +35,7 @@ __exportStar(require("./getAllCategoriesForDropDown"), exports);
 __exportStar(require("./getJobInvitesRepository"), exports);
 __exportStar(require("./inviteFreelancerRepository"), exports);
 __exportStar(require("./updateJobInviteRepository"), exports);
+__exportStar(require("./createJobOfferRepository"), exports);
+__exportStar(require("./getJobOfferByFreelancerIdRepository"), exports);
+__exportStar(require("./acceptJobOfferRepository"), exports);
+__exportStar(require("./getJobOfferByClientIdRepository"), exports);

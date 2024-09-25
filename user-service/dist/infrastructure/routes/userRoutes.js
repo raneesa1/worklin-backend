@@ -7,7 +7,7 @@ const { v2: cloudinary } = require("cloudinary");
 const { CloudinaryStorage } = require("multer-storage-cloudinary");
 const authMiddleware_1 = require("../middleware/authMiddleware");
 const userRoutes = (dependencies) => {
-    const { addExperience, getExperience, deleteExperienceController, locationController, addEducationController, getEducation, deleteEducation, setBioData, setProfileData, saveRole, updateEducation, updateExperience, getFreelancers, saveCategoryAndSkill, postProfile, resumeController, applyJobPost, getFreelancersBySkill, getSavedJobs, toggleSavedJob, getFreelancerId, getInvitedFreelancer, updateJobInvite, } = (0, index_1.controllers)(dependencies);
+    const { addExperience, getExperience, deleteExperienceController, locationController, addEducationController, getEducation, deleteEducation, setBioData, setProfileData, saveRole, updateEducation, updateExperience, getFreelancers, saveCategoryAndSkill, postProfile, resumeController, applyJobPost, getFreelancersBySkill, getSavedJobs, toggleSavedJob, getFreelancerId, getInvitedFreelancer, updateJobInvite, getAllClient, getClientById, } = (0, index_1.controllers)(dependencies);
     const router = (0, express_1.Router)();
     router
         .route("/addExperience")
@@ -44,8 +44,10 @@ const userRoutes = (dependencies) => {
     router.route("/toggle-save-job").post(toggleSavedJob);
     router.route("/getSavedJobs/:freelancerId").get(getSavedJobs);
     router.route("/freelancer/:freelancerId").get(getFreelancerId);
+    router.route("/client/:clientId").get(getClientById);
     router.route("/getInvitedFreelancer/:jobId").get(getInvitedFreelancer);
     router.route("/updateInviteJob").post(updateJobInvite);
+    router.route("/getAllClient").get((0, authMiddleware_1.checkTokenAndRole)(["admin"]), getAllClient);
     return router;
 };
 exports.userRoutes = userRoutes;

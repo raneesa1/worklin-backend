@@ -5,7 +5,7 @@ const express_1 = require("express");
 const index_1 = require("../../presentation/controller/index");
 const authMiddleware_1 = require("../middleware/authMiddleware");
 const skillRoutes = (dependencies) => {
-    const { addSkill, deleteSkill, updateSkill, getSkills, addCategory, getCategory, getSkillByCategoryId, deleteCategory, createJob, editJob, getJobByClientId, getJob, getJobPostById, getAllCategoryForDropDown, inviteFreelancer, getJobInvites, } = (0, index_1.controllers)(dependencies);
+    const { addSkill, deleteSkill, updateSkill, getSkills, addCategory, getCategory, getSkillByCategoryId, deleteCategory, createJob, editJob, getJobByClientId, getJob, getJobPostById, getAllCategoryForDropDown, inviteFreelancer, getJobInvites, createJobOffer, getJobOfferByFreelancerId, updateJobOfferStatus, getJobOfferByClientId, } = (0, index_1.controllers)(dependencies);
     const router = (0, express_1.Router)();
     router.route("/addskill").post(addSkill);
     router.route("/deleteSkill/:id").delete(deleteSkill);
@@ -27,6 +27,10 @@ const skillRoutes = (dependencies) => {
         .route("/invite-freelancer")
         .post((0, authMiddleware_1.checkTokenAndRole)(["client"]), inviteFreelancer);
     router.route("/job-invites/:freelancerId").get(getJobInvites);
+    router.route("/createJobOffer").post(createJobOffer);
+    router.route("/getOffers/:freelancerId").get(getJobOfferByFreelancerId);
+    router.route("/getClientOffers/:clientId").get(getJobOfferByClientId);
+    router.route("/update-status").patch(updateJobOfferStatus);
     return router;
 };
 exports.skillRoutes = skillRoutes;

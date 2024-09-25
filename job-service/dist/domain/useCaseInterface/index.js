@@ -28,3 +28,6 @@ __exportStar(require("./IGetJobPostUseCase"), exports);
 __exportStar(require("./IGetAllCategoryForDropDownUseCase"), exports);
 __exportStar(require("./IInviteFreelancerUseCase"), exports);
 __exportStar(require("./IGetJobInvitesUseCase"), exports);
+__exportStar(require("./ICreateJobOfferUseCase"), exports);
+__exportStar(require("./IGetJobOfferByIdUseCase"), exports);
+__exportStar(require("./IUpdateStatusJobOfferUseCase"), exports);

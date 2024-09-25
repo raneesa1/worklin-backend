@@ -30,8 +30,12 @@ function connectRabbitMQ() {
                 yield channel.assertExchange("userManagementExchange", "direct", {
                     durable: true,
                 });
-                console.log("Exchange 'userManagementExchange' declared.");
+                yield channel.assertExchange("paymentManagementExchange", "direct", {
+                    durable: true,
+                });
+                console.log(`Exchange paymentManagementExchange declared.`);
             }
+            console.log("Exchange 'userManagementExchange' declared.");
         }
         catch (error) {
             console.error("Error connecting to RabbitMQ:", error);

@@ -6,6 +6,9 @@ const deleteCategoryController_1 = require("./category/deleteCategoryController"
 const getAllCategoryControllerForDropDown_1 = require("./category/getAllCategoryControllerForDropDown");
 const getcategoryController_1 = require("./category/getcategoryController");
 const getSkillFromCategory_1 = require("./category/getSkillFromCategory");
+const createJobOfferController_1 = require("./jobOffer/createJobOfferController");
+const updateJobOfferStatusController_1 = require("./jobOffer/updateJobOfferStatusController");
+const getJobOfferByFreelancerIdController_1 = require("./jobOffer/getJobOfferByFreelancerIdController");
 const createJobPostController_1 = require("./jobPost/createJobPostController");
 const editJobPostController_1 = require("./jobPost/editJobPostController");
 const getJobByIdController_1 = require("./jobPost/getJobByIdController");
@@ -17,6 +20,7 @@ const addSkillController_1 = require("./skill/addSkillController");
 const deleteSkillController_1 = require("./skill/deleteSkillController");
 const getSkillsController_1 = require("./skill/getSkillsController");
 const updateSkillController_1 = require("./skill/updateSkillController.");
+const getJobOfferByClientIdController_1 = require("./jobOffer/getJobOfferByClientIdController");
 const controllers = (dependencies) => {
     return {
         addSkill: (0, addSkillController_1.createSkill)(dependencies),
@@ -34,7 +38,11 @@ const controllers = (dependencies) => {
         getJobPostById: (0, getJobByIdController_1.getJobByIdController)(dependencies),
         getAllCategoryForDropDown: (0, getAllCategoryControllerForDropDown_1.getAllCategoryForDropDownController)(dependencies),
         inviteFreelancer: (0, inviteFreelancerController_1.inviteFreelancerController)(dependencies),
-        getJobInvites: (0, getJobInvitesController_1.getJobInvitesController)(dependencies)
+        getJobInvites: (0, getJobInvitesController_1.getJobInvitesController)(dependencies),
+        createJobOffer: (0, createJobOfferController_1.createJobOfferController)(dependencies),
+        getJobOfferByFreelancerId: (0, getJobOfferByFreelancerIdController_1.getJobOfferByFreelancerIdController)(dependencies),
+        updateJobOfferStatus: (0, updateJobOfferStatusController_1.updateJobOfferStatusController)(dependencies),
+        getJobOfferByClientId: (0, getJobOfferByClientIdController_1.getJobOfferByClientIdController)(dependencies),
     };
 };
 exports.controllers = controllers;

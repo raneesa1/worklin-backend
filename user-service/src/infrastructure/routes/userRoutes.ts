@@ -33,6 +33,8 @@ export const userRoutes = (dependencies: IDependencies) => {
     getFreelancerId,
     getInvitedFreelancer,
     updateJobInvite,
+    getAllClient,
+    getClientById,
   } = controllers(dependencies);
 
   const router = Router();
@@ -72,7 +74,9 @@ export const userRoutes = (dependencies: IDependencies) => {
   router.route("/toggle-save-job").post(toggleSavedJob);
   router.route("/getSavedJobs/:freelancerId").get(getSavedJobs);
   router.route("/freelancer/:freelancerId").get(getFreelancerId);
+  router.route("/client/:clientId").get(getClientById);
   router.route("/getInvitedFreelancer/:jobId").get(getInvitedFreelancer);
   router.route("/updateInviteJob").post(updateJobInvite);
+  router.route("/getAllClient").get(checkTokenAndRole(["admin"]), getAllClient);
   return router;
 };

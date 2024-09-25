@@ -24,4 +24,6 @@ export * from "./getFreelancerByIdUseCase";
 export * from "./processInviteUseCase";
 export * from "./getInvitedFreelancersUseCase";
 export * from "./updateJobInvitesUseCase";
+export * from "./getAllClientsUseCase";
+export * from "./getClientByIdUseCase";
 

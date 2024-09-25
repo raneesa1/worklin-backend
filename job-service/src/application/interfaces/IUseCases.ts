@@ -1,12 +1,15 @@
 import { JobPost } from "../../domain/interface/IJobPost";
 import {
+  ICreateJobOfferUseCase,
   IGetAllCategoryForDropDownUseCase,
   IGetJobInvitesUseCase,
+  IGetJobOfferByIdUseCase,
   IGetJobPostByClientId,
   IGetJobPostById,
   IInviteFreelancerUseCase,
   IJobPostUseCase,
   IProcessJobApplicationUseCase,
+  IUpdateStatusJobOfferUseCase,
 } from "../../domain/useCaseInterface";
 import { ICreateCategoryUseCase } from "../../domain/useCaseInterface/ICreateCategoryUseCase";
 import { IDeleteCategoryUseCase } from "../../domain/useCaseInterface/IDeleteCategoryUseCase";
@@ -61,4 +64,16 @@ export interface IUseCases {
     dependencies: IDependencies
   ) => IInviteFreelancerUseCase;
   getJobInvitesUseCase: (dependencies: IDependencies) => IGetJobInvitesUseCase;
+  createJobOfferUseCase: (
+    dependencies: IDependencies
+  ) => ICreateJobOfferUseCase;
+  getJobOfferByFreelancerIdUseCase: (
+    dependencies: IDependencies
+  ) => IGetJobOfferByIdUseCase;
+  acceptJobOfferUseCase: (
+    dependencies: IDependencies
+  ) => IUpdateStatusJobOfferUseCase;
+  getJobOfferByClientIdUseCase: (
+    dependencies: IDependencies
+  ) => IGetJobOfferByIdUseCase;
 }

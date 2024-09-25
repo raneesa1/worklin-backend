@@ -1,4 +1,5 @@
 import { Category } from "../../domain/entities/category";
+import { IJobOffer } from "../../domain/entities/jobOffer";
 import { skillEntity } from "../../domain/entities/skillEntity";
 import { IApplication } from "../../domain/interface/IApplication";
 import {
@@ -46,5 +47,16 @@ export interface IRepositories {
     jobPostId: string,
     freelancerId: string,
     status: invitedFreelancerStatus
-  ): Promise<{ success: boolean; message: string }>;
+  ): Promise<IInviteFreelancer>;
+  createJobOfferRepository(jobOfferData: IJobOffer): Promise<IJobOffer>;
+  getJobOfferByFreelancerIdRepository(
+    freelancerId: string
+  ): Promise<IJobOffer[] | null>;
+  acceptJobOfferRepository(
+    jobOfferId: string,
+    status: string
+  ): Promise<IJobOffer>;
+  getJobOfferByClientIdRepository(
+    freelancerId: string
+  ): Promise<IJobOffer[] | null>;
 }

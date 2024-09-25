@@ -1,5 +1,13 @@
-import { authEntity, FreelancerEntity } from "../../domain/entities";
-import { IJobInvites, ISavedJobs, JobInvitesStatus } from "../../domain/entities/IJobInvites";
+import {
+  authEntity,
+  clientEntity,
+  FreelancerEntity,
+} from "../../domain/entities";
+import {
+  IJobInvites,
+  ISavedJobs,
+  JobInvitesStatus,
+} from "../../domain/entities/IJobInvites";
 import { IAddress } from "../../domain/interface/IAddress";
 import { BioData } from "../../domain/interface/IBioData";
 import { Category, Skill, SubCategory } from "../../domain/interface/ICategory";
@@ -85,5 +93,11 @@ export interface IRepositories {
   getInvitedFreelancersRepository(
     jobId: string
   ): Promise<Array<{ freelancer: FreelancerEntity; status: string }> | null>;
-  updateJobInviteRepository(freelancerId:string,jobId:string,status:JobInvitesStatus):Promise<FreelancerEntity | null>
+  updateJobInviteRepository(
+    freelancerId: string,
+    jobId: string,
+    status: JobInvitesStatus
+  ): Promise<FreelancerEntity | null>;
+  getAllClientsRepository(): Promise<clientEntity[] | null>;
+  getClientByIdRepository(clientId: string): Promise<clientEntity | null>;
 }

@@ -14,15 +14,17 @@ const setProfileDataController_1 = require("./setProfileDataController");
 const saveRoleController_1 = require("./saveRoleController");
 const updateEducation_1 = require("./education/updateEducation");
 const updateExperience_1 = require("./experience/updateExperience");
-const getFreelancers_1 = require("./getFreelancers");
+const getFreelancersController_1 = require("./getFreelancersController");
 const saveSkillsController_1 = require("./saveSkillsController");
 const postProfileController_1 = require("./postProfileController");
 const applyJobPost_1 = require("./applyJobPost");
-const getSavedJobs_1 = require("./getSavedJobs");
-const saveJob_1 = require("./saveJob");
-const getFreelancerById_1 = require("./getFreelancerById");
-const getInvitedFreelancers_1 = require("./getInvitedFreelancers");
+const getSavedJobsController_1 = require("./getSavedJobsController");
+const saveJobController_1 = require("./saveJobController");
+const getFreelancerByIdController_1 = require("./getFreelancerByIdController");
+const getInvitedFreelancersController_1 = require("./getInvitedFreelancersController");
 const updateJobInvitesController_1 = require("./updateJobInvitesController");
+const getAllClientsController_1 = require("./getAllClientsController");
+const getClientByIdController_1 = require("./getClientByIdController");
 const controllers = (dependencies) => {
     return {
         resumeController: (0, resumeController_1.resumeController)(dependencies),
@@ -38,16 +40,18 @@ const controllers = (dependencies) => {
         saveRole: (0, saveRoleController_1.saveRoleController)(dependencies),
         updateEducation: (0, updateEducation_1.updateEducationController)(dependencies),
         updateExperience: (0, updateExperience_1.updateExperienceController)(dependencies),
-        getFreelancers: (0, getFreelancers_1.getFreelancersController)(dependencies),
+        getFreelancers: (0, getFreelancersController_1.getFreelancersController)(dependencies),
         saveCategoryAndSkill: (0, saveSkillsController_1.saveSkillsController)(dependencies),
         postProfile: (0, postProfileController_1.postProfileController)(dependencies),
         applyJobPost: (0, applyJobPost_1.applyJobPostController)(dependencies),
-        getFreelancersBySkill: (0, getFreelancers_1.getFreelancersController)(dependencies),
-        getSavedJobs: (0, getSavedJobs_1.getSavedJobsController)(dependencies),
-        toggleSavedJob: (0, saveJob_1.saveJobController)(dependencies),
-        getFreelancerId: (0, getFreelancerById_1.getFreelancerByIdController)(dependencies),
-        getInvitedFreelancer: (0, getInvitedFreelancers_1.getInvitedFreelancersController)(dependencies),
+        getFreelancersBySkill: (0, getFreelancersController_1.getFreelancersController)(dependencies),
+        getSavedJobs: (0, getSavedJobsController_1.getSavedJobsController)(dependencies),
+        toggleSavedJob: (0, saveJobController_1.saveJobController)(dependencies),
+        getFreelancerId: (0, getFreelancerByIdController_1.getFreelancerByIdController)(dependencies),
+        getInvitedFreelancer: (0, getInvitedFreelancersController_1.getInvitedFreelancersController)(dependencies),
         updateJobInvite: (0, updateJobInvitesController_1.updateJobInvitesController)(dependencies),
+        getAllClient: (0, getAllClientsController_1.getAllClientsController)(dependencies),
+        getClientById: (0, getClientByIdController_1.getClientByIdController)(dependencies),
     };
 };
 exports.controllers = controllers;

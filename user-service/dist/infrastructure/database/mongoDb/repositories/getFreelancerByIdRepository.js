@@ -21,6 +21,13 @@ function getFreelancerByIdRepository(freelancerId) {
                 .populate("education")
                 .populate("languages")
                 .populate("address")
+                .populate({
+                path: "category",
+                populate: {
+                    path: "skills", // Populates the 'skills' field inside 'category'
+                    model: "Skill", // Refers to the 'Skill' model
+                },
+            })
                 .exec();
             console.log(freelancer, "consoling the freelancer");
             if (!freelancer) {

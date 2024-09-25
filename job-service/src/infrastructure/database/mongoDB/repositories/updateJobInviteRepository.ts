@@ -7,7 +7,7 @@ export const updateJobInviteRepository = async (
   jobPostId: string,
   freelancerId: string,
   status: invitedFreelancerStatus
-) => {
+):Promise<IInviteFreelancer> => {
   try {
     console.log("Params:", { jobPostId, freelancerId, status });
 

@@ -17,13 +17,11 @@ const dotenv_1 = __importDefault(require("dotenv"));
 const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const cors_1 = __importDefault(require("cors"));
 const jobRoutes_1 = require("../infrastructure/routes/jobRoutes");
-// import { userRoutes } from "../infrastructure/routes/authRoutes";
-// import { consumeMessages } from "../infrastructure/rabbitmq/consumer";
-// import { connectRabbitMQ } from "../infrastructure/rabbitmq/rabbit.config";
 const dependencies_1 = require("../config/dependencies");
 const rabbit_config_1 = require("../infrastructure/rabbitMq/rabbit.config");
 const consumer_1 = require("../infrastructure/rabbitMq/consumer");
 const consumeJobInviteUpdates_1 = require("../infrastructure/rabbitMq/consumeJobInviteUpdates");
+const jobOfferModel_1 = require("../infrastructure/database/mongoDB/model/jobOfferModel");
 // import { consumeJobRequests } from "../infrastructure/rabbitMq/consumeJobRequests";
 dotenv_1.default.config();
 const app = (0, express_1.default)();
@@ -49,6 +47,7 @@ const startServer = () => __awaiter(void 0, void 0, void 0, function* () {
         yield (0, rabbit_config_1.connectRabbitMQ)();
         yield (0, consumer_1.consumeJobApplications)("jobApplicationQueue", dependencies_1.dependencies);
         yield (0, consumeJobInviteUpdates_1.consumeJobInviteUpdates)("jobApplicationQueue", dependencies_1.dependencies);
+        (0, jobOfferModel_1.scheduleOfferDeletion)();
         app.listen(PORT, () => {
             console.log(`Job service running on port ${PORT}`);
         });

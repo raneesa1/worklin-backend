@@ -54,10 +54,37 @@ const connectSocketIo = (server) => {
                 console.error("Error processing new message:", error);
             }
         }));
-        socket.on("join_video", (data) => {
-            const senderId = userSocketMap[data.id];
-            console.log("socket.on", senderId);
-            io.to(senderId).emit("video received", data);
+        socket.on("initiate_call", ({ callerId, receiverId, callerName }) => {
+            const receiverSocketId = userSocketMap[receiverId];
+            if (receiverSocketId) {
+                io.to(receiverSocketId).emit("incoming_call", { callerId, callerName });
+            }
+        });
+        socket.on("call_accepted", ({ callerId, accepterId, roomID }) => {
+            const callerSocketId = userSocketMap[callerId];
+            if (callerSocketId) {
+                io.to(callerSocketId).emit("call_accepted", { accepterId, roomID });
+            }
+        });
+        socket.on("call_rejected", ({ callerId, rejecterId }) => {
+            const callerSocketId = userSocketMap[callerId];
+            if (callerSocketId) {
+                io.to(callerSocketId).emit("call_rejected", { rejecterId });
+            }
+        });
+        socket.on("end_call", ({ callerId, receiverId }) => {
+            const receiverSocketId = userSocketMap[receiverId];
+            if (receiverSocketId) {
+                io.to(receiverSocketId).emit("call_ended", { callerId });
+            }
+        });
+        socket.on("join_video_room", ({ roomID, userId }) => {
+            socket.join(roomID);
+            socket.to(roomID).emit("user_joined", { userId });
+        });
+        socket.on("leave_video_room", ({ roomID, userId }) => {
+            socket.leave(roomID);
+            socket.to(roomID).emit("user_left", { userId });
         });
         socket.on("disconnect", () => {
             delete userSocketMap[userId];

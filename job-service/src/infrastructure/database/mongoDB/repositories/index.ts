@@ -19,3 +19,7 @@ export * from "./getAllCategoriesForDropDown";
 export * from "./getJobInvitesRepository";
 export * from "./inviteFreelancerRepository";
 export * from "./updateJobInviteRepository";
+export * from "./createJobOfferRepository";
+export * from "./getJobOfferByFreelancerIdRepository";
+export * from "./acceptJobOfferRepository";
+export * from "./getJobOfferByClientIdRepository";
