@@ -1,22 +1,17 @@
-FROM --platform=$BUILDPLATFORM node:18-alpine AS builder
+FROM node:18-alpine
 
 WORKDIR /app
 
-COPY package*.json ./
+COPY package.json .
+
 RUN npm install
 
+RUN npm install typescript -g
+
 COPY . .
+
 RUN npm run build
-
-FROM --platform=$TARGETPLATFORM node:18-alpine
-
-WORKDIR /app
-
-COPY package*.json ./
-RUN npm install --production
-
-COPY --from=builder /app/dist ./dist
 
 EXPOSE 3004
 
-CMD ["npm", "start"]
+CMD [ "npm", "start" ]
