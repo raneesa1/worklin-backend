@@ -1,7 +1,7 @@
-import mongoose, { Document, Types } from "mongoose";
+import mongoose, { Document, ObjectId, Types } from "mongoose";
 
 export interface skillEntity extends mongoose.Document {
-  _id?: Types.ObjectId | string;
+  _id?: ObjectId;
   name: string;
   description?: string;
 }
