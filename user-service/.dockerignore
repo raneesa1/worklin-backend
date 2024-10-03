@@ -1,2 +1,41 @@
+# Ignore node_modules to avoid sending dependencies
 node_modules
+npm-debug.log
+yarn-error.log
+
+# Ignore build output
 dist
+build
+out
+*.tgz
+
+# Ignore environment variables
+.env
+
+# Ignore local configuration files
+*.local
+
+# Ignore temporary files
+*.tmp
+*.temp
+
+# Ignore version control files
+.git
+.gitignore
+
+# Ignore logs
+logs
+*.log
+
+# Ignore coverage reports
+coverage
+*.lcov
+
+# Ignore IDE configuration files
+.vscode
+.idea
+*.sublime-workspace
+
+# Ignore OS generated files
+.DS_Store
+Thumbs.db
