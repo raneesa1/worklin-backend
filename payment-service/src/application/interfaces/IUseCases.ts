@@ -1,3 +1,4 @@
+import { IPayment } from "../../domain/interface/ITransaction";
 import {
   IGetTransactionsByUserIdUseCase,
   IGetPaymentDetailsUseCase,
@@ -14,7 +15,7 @@ export interface IUseCases {
   getPaymentDetailsUseCase: (
     dependencies: IDependencies
   ) => IGetPaymentDetailsUseCase;
-  updatePaymentStatusUseCase: (
+updatePaymentStatusUseCase: (
     dependencies: IDependencies
-  ) => IUpdatePaymentStatusUseCase;
+  ) => Promise<IPayment|null>;
 }

@@ -7,12 +7,13 @@ import { consumeMessages } from "../infrastructure/rabbitmq/consumer";
 import { connectRabbitMQ } from "../infrastructure/rabbitmq/rabbit.config";
 import { dependencies } from "../config/dependencies";
 import { consumeInvites } from "../infrastructure/rabbitmq/consumeInvites";
+import { setupHireInfoConsumer } from "../infrastructure/rabbitmq/consumer/hireInfoConsumer";
 // import { consumeJobRequests } from "../infrastructure/rabbitmq/consumeJobRequests";
 
 dotenv.config();
 
 const app: Application = express();
-const PORT: number = Number(process.env.PORT) || 8002;
+const PORT: number = Number(process.env.PORT) || 3002;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -40,7 +41,8 @@ const startServer = async () => {
   try {
     await connectRabbitMQ();
     await consumeMessages("userQueue", dependencies);
-    await consumeInvites("inviteQueue", dependencies); // Add this line
+    await consumeInvites("inviteQueue", dependencies);
+    await setupHireInfoConsumer() // Add this line
     app.listen(PORT, () => {
       console.log(`User service running on port ${PORT}`);
     });

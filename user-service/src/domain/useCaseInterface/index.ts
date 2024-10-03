@@ -26,3 +26,4 @@ export * from "./IGetInvitedFreelancersUseCase";
 export * from "./IUpdateJobInvitesUseCase";
 export * from "./IGetAllClientsUseCase";
 export * from "./IGetClientByIdUseCase";
+export * from "./IGetAdminDashboardUseCase";

@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { IDependencies } from "../../../application/interfaces/IDependencies";
-import { IExperience } from "../../../domain/useCaseInterface/Iexperience";
+import { IExperience } from "../../../domain/entities/Iexperience";
 import { experienceSchema } from "../../../utils/validation/experienceValidation";
 
 export const addExperienceController = (dependencies: IDependencies) => {

@@ -1,10 +1,16 @@
 import amqp from "amqplib";
 
 let channel: amqp.Channel | null = null;
+let isConnecting = false;
 
-export async function connectRabbitMQ(): Promise<void> {
+export async function connectRabbitMQ(
+  retries = 5,
+  delay = 5000
+): Promise<void> {
   try {
-    const connection = await amqp.connect("amqp://127.0.0.1:5672");
+    const connection = await amqp.connect("amqp://127.0.0.1:5672", {
+      heartbeat: 60, // Set heartbeat to 60 seconds
+    });
     channel = await connection.createChannel();
     console.log("RabbitMQ connection and channel established.");
 
@@ -21,13 +27,28 @@ export async function connectRabbitMQ(): Promise<void> {
         durable: true,
       });
       console.log(`Exchange paymentManagementExchange declared.`);
+      await channel.assertExchange("paymentServiceExchange", "direct", {
+        durable: true,
+      });
+      console.log("Exchange 'paymentServiceExchange' declared.");
     }
     console.log("Exchange 'userManagementExchange' declared.");
+    isConnecting = false;
   } catch (error) {
     console.error("Error connecting to RabbitMQ:", error);
-    throw error;
+    isConnecting = false;
+    if (retries > 0) {
+      console.log(
+        `Retrying connection to RabbitMQ... attempts left: ${retries}`
+      );
+      await new Promise((res) => setTimeout(res, delay));
+      return connectRabbitMQ(retries - 1, delay);
+    } else {
+      throw error;
+    }
   }
 }
+
 
 export function getChannel(): amqp.Channel | null {
   return channel;

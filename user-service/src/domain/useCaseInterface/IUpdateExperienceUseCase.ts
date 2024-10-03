@@ -1,4 +1,4 @@
-import { IExperience } from "./Iexperience";
+import { IExperience } from "../entities/Iexperience";
 
 export interface IUpdateExperienceUseCase {
   execute(

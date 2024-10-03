@@ -1,11 +1,13 @@
 import { JobPost } from "../../domain/interface/IJobPost";
 import {
   ICreateJobOfferUseCase,
+  IDeleteJobPostUseCase,
   IGetAllCategoryForDropDownUseCase,
   IGetJobInvitesUseCase,
   IGetJobOfferByIdUseCase,
   IGetJobPostByClientId,
   IGetJobPostById,
+  IGetTotalNumberOfJobPostUseCase,
   IInviteFreelancerUseCase,
   IJobPostUseCase,
   IProcessJobApplicationUseCase,
@@ -76,4 +78,6 @@ export interface IUseCases {
   getJobOfferByClientIdUseCase: (
     dependencies: IDependencies
   ) => IGetJobOfferByIdUseCase;
+  getTotalNumberOfJobPostUseCase: () => IGetTotalNumberOfJobPostUseCase;
+  deleteJobPostUseCase: (id: string) => IDeleteJobPostUseCase
 }

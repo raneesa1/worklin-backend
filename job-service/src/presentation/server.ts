@@ -8,12 +8,13 @@ import { connectRabbitMQ } from "../infrastructure/rabbitMq/rabbit.config";
 import { consumeJobApplications } from "../infrastructure/rabbitMq/consumer";
 import { consumeJobInviteUpdates } from "../infrastructure/rabbitMq/consumeJobInviteUpdates";
 import { scheduleOfferDeletion } from "../infrastructure/database/mongoDB/model/jobOfferModel";
+import { setupPaymentConfirmationConsumer } from "../infrastructure/rabbitMq/consumers/paymentConfirmationConsumer";
 // import { consumeJobRequests } from "../infrastructure/rabbitMq/consumeJobRequests";
 
 dotenv.config();
 
 const app: Application = express();
-const PORT: number = Number(process.env.PORT) || 8002;
+const PORT: number = Number(process.env.PORT) || 3002;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -42,6 +43,7 @@ const startServer = async () => {
     await connectRabbitMQ();
     await consumeJobApplications("jobApplicationQueue", dependencies);
     await consumeJobInviteUpdates("jobApplicationQueue", dependencies);
+    await setupPaymentConfirmationConsumer();
     scheduleOfferDeletion();
 
     app.listen(PORT, () => {

@@ -9,7 +9,7 @@ import { connectRabbitMQ } from "../infrastructure/rabbitmq/rabbitmq.config";
 dotenv.config();
 
 const app: Application = express();
-const PORT: number = Number(process.env.PORT) || 8001;
+const PORT: number = Number(process.env.PORT) || 3001;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

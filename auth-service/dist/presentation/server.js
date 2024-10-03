@@ -21,7 +21,7 @@ const dependencies_1 = require("../config/dependencies");
 const rabbitmq_config_1 = require("../infrastructure/rabbitmq/rabbitmq.config");
 dotenv_1.default.config();
 const app = (0, express_1.default)();
-const PORT = Number(process.env.PORT) || 8001;
+const PORT = Number(process.env.PORT) || 3001;
 app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({ extended: true }));
 app.use((0, cookie_parser_1.default)());

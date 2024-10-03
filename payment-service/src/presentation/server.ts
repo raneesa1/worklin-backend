@@ -12,7 +12,7 @@ import { paymentWebhookController } from "./controllers/paymentWebhookController
 dotenv.config();
 
 const app: Application = express();
-const PORT: number = Number(process.env.PORT) || 8005;
+const PORT: number = Number(process.env.PORT) || 3005;
 
 app.use(cookieParser());
 
@@ -28,7 +28,6 @@ app.use((req, res, next) => {
   next();
 });
 
-
 app.use((req, res, next) => {
   if (req.originalUrl === "/webhook") {
     next();
@@ -37,13 +36,11 @@ app.use((req, res, next) => {
   }
 });
 
-
 app.post(
   "/webhook",
   express.raw({ type: "application/json" }),
   paymentWebhookController(dependencies)
 );
-
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

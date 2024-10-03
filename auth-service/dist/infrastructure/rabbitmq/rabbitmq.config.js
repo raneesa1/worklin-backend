@@ -16,10 +16,13 @@ exports.connectRabbitMQ = connectRabbitMQ;
 exports.getChannel = getChannel;
 const amqplib_1 = __importDefault(require("amqplib"));
 let channel = null;
+let isConnecting = false;
 function connectRabbitMQ() {
-    return __awaiter(this, void 0, void 0, function* () {
+    return __awaiter(this, arguments, void 0, function* (retries = 5, delay = 5000) {
         try {
-            const connection = yield amqplib_1.default.connect("amqp://127.0.0.1:5672");
+            const connection = yield amqplib_1.default.connect("amqp://127.0.0.1:5672", {
+                heartbeat: 60, // Set heartbeat to 60 seconds
+            });
             channel = yield connection.createChannel();
             console.log("RabbitMQ connection and channel established.");
             // Declare the exchange
@@ -29,13 +32,28 @@ function connectRabbitMQ() {
                 });
                 console.log("Exchange 'userManagementExchange' declared.");
             }
+            isConnecting = false;
         }
         catch (error) {
             console.error("Error connecting to RabbitMQ:", error);
-            throw error;
+            isConnecting = false;
+            if (retries > 0) {
+                console.log(`Retrying connection to RabbitMQ... attempts left: ${retries}`);
+                yield new Promise((res) => setTimeout(res, delay));
+                return connectRabbitMQ(retries - 1, delay);
+            }
+            else {
+                throw error;
+            }
         }
     });
 }
 function getChannel() {
-    return channel;
+    return __awaiter(this, void 0, void 0, function* () {
+        if (!channel) {
+            console.log("Channel is not available, attempting to reconnect...");
+            yield connectRabbitMQ();
+        }
+        return channel;
+    });
 }

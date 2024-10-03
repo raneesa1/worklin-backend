@@ -9,7 +9,7 @@ import { createServer } from "http";
 dotenv.config();
 
 const app: Application = express();
-const PORT: number = Number(process.env.PORT) || 8004;
+const PORT: number = Number(process.env.PORT) || 3004;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

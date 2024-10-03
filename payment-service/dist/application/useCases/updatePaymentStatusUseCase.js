@@ -16,10 +16,14 @@ const updatePaymentStatusUseCase = (dependencies) => {
         execute: (paymentId, status) => __awaiter(void 0, void 0, void 0, function* () {
             try {
                 console.log(paymentId, status, "consoling the payment id and status from the update payment status use case");
-                return yield repositories.updatePaymentStatusRepository(paymentId, status);
+                const paymentData = yield repositories.updatePaymentStatusRepository(paymentId, status);
+                if (paymentData) {
+                    return paymentData;
+                }
+                return null;
             }
             catch (error) {
-                throw new Error(`getAdminTransactionsUseCase  failed: ${error.message}`);
+                throw new Error(`updatePaymentStatusUseCase failed: ${error.message}`);
             }
         }),
     };

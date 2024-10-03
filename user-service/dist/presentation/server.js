@@ -21,10 +21,11 @@ const consumer_1 = require("../infrastructure/rabbitmq/consumer");
 const rabbit_config_1 = require("../infrastructure/rabbitmq/rabbit.config");
 const dependencies_1 = require("../config/dependencies");
 const consumeInvites_1 = require("../infrastructure/rabbitmq/consumeInvites");
+const hireInfoConsumer_1 = require("../infrastructure/rabbitmq/consumer/hireInfoConsumer");
 // import { consumeJobRequests } from "../infrastructure/rabbitmq/consumeJobRequests";
 dotenv_1.default.config();
 const app = (0, express_1.default)();
-const PORT = Number(process.env.PORT) || 8002;
+const PORT = Number(process.env.PORT) || 3002;
 app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({ extended: true }));
 app.use((0, cookie_parser_1.default)());
@@ -45,7 +46,8 @@ const startServer = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
         yield (0, rabbit_config_1.connectRabbitMQ)();
         yield (0, consumer_1.consumeMessages)("userQueue", dependencies_1.dependencies);
-        yield (0, consumeInvites_1.consumeInvites)("inviteQueue", dependencies_1.dependencies); // Add this line
+        yield (0, consumeInvites_1.consumeInvites)("inviteQueue", dependencies_1.dependencies);
+        yield (0, hireInfoConsumer_1.setupHireInfoConsumer)(); // Add this line
         app.listen(PORT, () => {
             console.log(`User service running on port ${PORT}`);
         });

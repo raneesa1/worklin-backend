@@ -6,7 +6,7 @@ export interface IRepositories {
   updatePaymentStatusRepository: (
     paymentId: string,
     status: string
-  ) => Promise<void>;
+  ) => Promise<IPayment | null>;
   // queuePaymentForProcessing: (payment: ITransaction) => Promise<void>;
   getPaymentByPaymentId: (paymentId: string) => Promise<IPayment | null>;
 }

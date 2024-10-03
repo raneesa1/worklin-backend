@@ -15,6 +15,6 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 __exportStar(require("./authEntity"), exports);
-__exportStar(require("../useCaseInterface/Iexperience"), exports);
+__exportStar(require("./Iexperience"), exports);
 __exportStar(require("./clientEntity"), exports);
 __exportStar(require("./freelancerEntity"), exports);

@@ -21,13 +21,18 @@ const connectSocketIo = (server) => {
         },
     });
     const userSocketMap = {};
+    const emitOnlineUsers = () => {
+        console.log(Object.keys(userSocketMap), "consoling the online userssssssss");
+        io.emit("onlineUsers", Object.keys(userSocketMap));
+    };
     io.on("connection", (socket) => {
-        console.log("socket connceted");
+        console.log("socket connected");
         const userId = socket.handshake.query.userId;
         if (userId != "undefined") {
             userSocketMap[userId] = socket.id;
+            console.log(userId, "consoling the user id from query");
+            emitOnlineUsers();
         }
-        socket.emit("getOnlineUsers", Object.keys(userSocketMap));
         socket.on("join chat", (room) => {
             socket.join(room);
         });
@@ -42,11 +47,11 @@ const connectSocketIo = (server) => {
                 .emit("click read", data.chatIds, data.click, data.view);
         }));
         socket.on("new message", (messageData) => __awaiter(void 0, void 0, void 0, function* () {
-            console.log("Received new message:", messageData);
+            // console.log("Received new message:", messageData);
             try {
                 const newMessage = yield (0, useCases_1.sendMessageUseCase)(dependencies_1.dependencies).execute(messageData);
                 if (newMessage) {
-                    console.log("Broadcasting new message:", newMessage);
+                    // console.log("Broadcasting new message:", newMessage);
                     io.to(messageData.chatId).emit("message received", newMessage);
                 }
             }
@@ -88,6 +93,7 @@ const connectSocketIo = (server) => {
         });
         socket.on("disconnect", () => {
             delete userSocketMap[userId];
+            emitOnlineUsers();
             console.log("socket disconnected");
         });
     });

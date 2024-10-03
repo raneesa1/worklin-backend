@@ -16,7 +16,7 @@ const clientSchema = new Schema<clientEntity | authEntity>({
   jobPost: [{ type: Types.ObjectId, ref: "JobPost" }],
   createdAt: { type: Date, default: Date.now },
   CompanyName: { type: String },
-  hires: [{ type: Types.ObjectId, ref: "Freelancer" }],
+  hires: [{ type: Types.ObjectId, ref: "Hire" }],
   savedTalents: [{ type: Types.ObjectId, ref: "Freelancer" }],
   projects: [{ type: Types.ObjectId, ref: "Project" }],
 });

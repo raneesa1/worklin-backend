@@ -19,6 +19,8 @@ import { deleteSkill } from "./skill/deleteSkillController";
 import { getSkills } from "./skill/getSkillsController";
 import { updateSkill } from "./skill/updateSkillController.";
 import { getJobOfferByClientIdController } from "./jobOffer/getJobOfferByClientIdController";
+import { getTotalNumberOfJobPostController } from "./jobPost/getTotalNumberOfJobPostController";
+import { deleteJobPostController } from "./jobPost/deleteJobPostController";
 
 export const controllers = (dependencies: IDependencies) => {
   return {
@@ -44,5 +46,7 @@ export const controllers = (dependencies: IDependencies) => {
       getJobOfferByFreelancerIdController(dependencies),
     updateJobOfferStatus: updateJobOfferStatusController(dependencies),
     getJobOfferByClientId: getJobOfferByClientIdController(dependencies),
+    getTotalNumberOfJobPost: getTotalNumberOfJobPostController(dependencies),
+    deleteJobPost:deleteJobPostController(dependencies)
   };
 };

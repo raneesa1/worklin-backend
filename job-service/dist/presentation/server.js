@@ -22,10 +22,11 @@ const rabbit_config_1 = require("../infrastructure/rabbitMq/rabbit.config");
 const consumer_1 = require("../infrastructure/rabbitMq/consumer");
 const consumeJobInviteUpdates_1 = require("../infrastructure/rabbitMq/consumeJobInviteUpdates");
 const jobOfferModel_1 = require("../infrastructure/database/mongoDB/model/jobOfferModel");
+const paymentConfirmationConsumer_1 = require("../infrastructure/rabbitMq/consumers/paymentConfirmationConsumer");
 // import { consumeJobRequests } from "../infrastructure/rabbitMq/consumeJobRequests";
 dotenv_1.default.config();
 const app = (0, express_1.default)();
-const PORT = Number(process.env.PORT) || 8002;
+const PORT = Number(process.env.PORT) || 3002;
 app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({ extended: true }));
 app.use((0, cookie_parser_1.default)());
@@ -47,6 +48,7 @@ const startServer = () => __awaiter(void 0, void 0, void 0, function* () {
         yield (0, rabbit_config_1.connectRabbitMQ)();
         yield (0, consumer_1.consumeJobApplications)("jobApplicationQueue", dependencies_1.dependencies);
         yield (0, consumeJobInviteUpdates_1.consumeJobInviteUpdates)("jobApplicationQueue", dependencies_1.dependencies);
+        yield (0, paymentConfirmationConsumer_1.setupPaymentConfirmationConsumer)();
         (0, jobOfferModel_1.scheduleOfferDeletion)();
         app.listen(PORT, () => {
             console.log(`Job service running on port ${PORT}`);

@@ -23,3 +23,5 @@ export * from "./createJobOfferRepository";
 export * from "./getJobOfferByFreelancerIdRepository";
 export * from "./acceptJobOfferRepository";
 export * from "./getJobOfferByClientIdRepository";
+export * from "./getTotalNumberOfJobPosts";
+export * from "./deleteJobPostRepository";

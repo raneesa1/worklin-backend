@@ -15,7 +15,7 @@ const clientSchema = new mongoose_1.Schema({
     jobPost: [{ type: mongoose_1.Types.ObjectId, ref: "JobPost" }],
     createdAt: { type: Date, default: Date.now },
     CompanyName: { type: String },
-    hires: [{ type: mongoose_1.Types.ObjectId, ref: "Freelancer" }],
+    hires: [{ type: mongoose_1.Types.ObjectId, ref: "Hire" }],
     savedTalents: [{ type: mongoose_1.Types.ObjectId, ref: "Freelancer" }],
     projects: [{ type: mongoose_1.Types.ObjectId, ref: "Project" }],
 });

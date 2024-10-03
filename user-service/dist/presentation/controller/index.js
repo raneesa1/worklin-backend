@@ -17,7 +17,7 @@ const updateExperience_1 = require("./experience/updateExperience");
 const getFreelancersController_1 = require("./getFreelancersController");
 const saveSkillsController_1 = require("./saveSkillsController");
 const postProfileController_1 = require("./postProfileController");
-const applyJobPost_1 = require("./applyJobPost");
+const applyJobPostController_1 = require("./applyJobPostController");
 const getSavedJobsController_1 = require("./getSavedJobsController");
 const saveJobController_1 = require("./saveJobController");
 const getFreelancerByIdController_1 = require("./getFreelancerByIdController");
@@ -25,6 +25,7 @@ const getInvitedFreelancersController_1 = require("./getInvitedFreelancersContro
 const updateJobInvitesController_1 = require("./updateJobInvitesController");
 const getAllClientsController_1 = require("./getAllClientsController");
 const getClientByIdController_1 = require("./getClientByIdController");
+const AdminDashboardController_1 = require("./AdminDashboardController");
 const controllers = (dependencies) => {
     return {
         resumeController: (0, resumeController_1.resumeController)(dependencies),
@@ -43,7 +44,7 @@ const controllers = (dependencies) => {
         getFreelancers: (0, getFreelancersController_1.getFreelancersController)(dependencies),
         saveCategoryAndSkill: (0, saveSkillsController_1.saveSkillsController)(dependencies),
         postProfile: (0, postProfileController_1.postProfileController)(dependencies),
-        applyJobPost: (0, applyJobPost_1.applyJobPostController)(dependencies),
+        applyJobPost: (0, applyJobPostController_1.applyJobPostController)(dependencies),
         getFreelancersBySkill: (0, getFreelancersController_1.getFreelancersController)(dependencies),
         getSavedJobs: (0, getSavedJobsController_1.getSavedJobsController)(dependencies),
         toggleSavedJob: (0, saveJobController_1.saveJobController)(dependencies),
@@ -52,6 +53,7 @@ const controllers = (dependencies) => {
         updateJobInvite: (0, updateJobInvitesController_1.updateJobInvitesController)(dependencies),
         getAllClient: (0, getAllClientsController_1.getAllClientsController)(dependencies),
         getClientById: (0, getClientByIdController_1.getClientByIdController)(dependencies),
+        getAdminDashboardData: (0, AdminDashboardController_1.AdminDashboardController)(dependencies)
     };
 };
 exports.controllers = controllers;

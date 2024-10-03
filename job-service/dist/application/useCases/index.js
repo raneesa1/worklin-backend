@@ -37,3 +37,4 @@ __exportStar(require("./createJobOfferUseCase"), exports);
 __exportStar(require("./getJobOfferByFreelancerIdUseCase"), exports);
 __exportStar(require("./acceptJobOfferUseCase"), exports);
 __exportStar(require("./getJobOfferByClientIdUseCase"), exports);
+__exportStar(require("./getTotalNumberOfJobPostUseCase"), exports);

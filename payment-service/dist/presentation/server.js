@@ -24,7 +24,7 @@ const paymentModel_1 = require("../infrastructure/database/mongoDB/model/payment
 const paymentWebhookController_1 = require("./controllers/paymentWebhookController");
 dotenv_1.default.config();
 const app = (0, express_1.default)();
-const PORT = Number(process.env.PORT) || 8005;
+const PORT = Number(process.env.PORT) || 3005;
 app.use((0, cookie_parser_1.default)());
 const corsOptions = {
     origin: "http://localhost:4200",

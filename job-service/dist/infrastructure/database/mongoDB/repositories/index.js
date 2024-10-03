@@ -39,3 +39,5 @@ __exportStar(require("./createJobOfferRepository"), exports);
 __exportStar(require("./getJobOfferByFreelancerIdRepository"), exports);
 __exportStar(require("./acceptJobOfferRepository"), exports);
 __exportStar(require("./getJobOfferByClientIdRepository"), exports);
+__exportStar(require("./getTotalNumberOfJobPosts"), exports);
+__exportStar(require("./deleteJobPostRepository"), exports);

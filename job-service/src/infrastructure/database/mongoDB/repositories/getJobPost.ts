@@ -8,6 +8,7 @@ export const getJobPost = async (): Promise<JobPost[]> => {
   try {
     const jobPosts: JobPost[] = await JobPostModel.find({
       isCompleted: true,
+      isActive:true
     })
       .populate("skills") // Only fetch the skill `name` field
       .populate("applications") // Only fetch the skill `name` field

@@ -1,0 +1,37 @@
+name: Build & Push notification Service Docker Image
+
+on: 
+  push:
+    branches:
+      - main
+    paths:
+      - 'notification-service/**'
+  workflow_dispatch:    
+
+jobs:
+  push_to_registry:
+    name: Push Docker Image to Docker Hub   
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the repo
+        uses: actions/checkout@v3
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.USERNAME }}   
+          password: ${{ secrets.PASSWORD }}   
+
+      - name: Build and push docker image
+        uses: docker/build-push-action@v4
+        with:
+          context: ./notification-service/
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: raneesa/worklin-notification-service:latest

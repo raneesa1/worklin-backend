@@ -15,6 +15,7 @@ const getJobPost = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const jobPosts = yield job_post_model_1.JobPostModel.find({
             isCompleted: true,
+            isActive: true
         })
             .populate("skills") // Only fetch the skill `name` field
             .populate("applications") // Only fetch the skill `name` field

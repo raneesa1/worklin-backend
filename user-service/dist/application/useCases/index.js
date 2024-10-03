@@ -42,3 +42,4 @@ __exportStar(require("./getInvitedFreelancersUseCase"), exports);
 __exportStar(require("./updateJobInvitesUseCase"), exports);
 __exportStar(require("./getAllClientsUseCase"), exports);
 __exportStar(require("./getClientByIdUseCase"), exports);
+__exportStar(require("./getAdminDashboardUseCase"), exports);

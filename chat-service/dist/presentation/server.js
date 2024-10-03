@@ -22,7 +22,7 @@ const socket_1 = __importDefault(require("../socket/socket"));
 const http_1 = require("http");
 dotenv_1.default.config();
 const app = (0, express_1.default)();
-const PORT = Number(process.env.PORT) || 8004;
+const PORT = Number(process.env.PORT) || 3004;
 app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({ extended: true }));
 app.use((0, cookie_parser_1.default)());

@@ -25,6 +25,8 @@ export const skillRoutes = (dependencies: IDependencies) => {
     getJobOfferByFreelancerId,
     updateJobOfferStatus,
     getJobOfferByClientId,
+    getTotalNumberOfJobPost,
+    deleteJobPost,
   } = controllers(dependencies);
 
   const router = Router();
@@ -53,6 +55,8 @@ export const skillRoutes = (dependencies: IDependencies) => {
   router.route("/getOffers/:freelancerId").get(getJobOfferByFreelancerId);
   router.route("/getClientOffers/:clientId").get(getJobOfferByClientId);
   router.route("/update-status").patch(updateJobOfferStatus);
+  router.route("/getTotalNumberOfJobPost").get(getTotalNumberOfJobPost);
+  router.route("/deleteJobPost").patch(deleteJobPost);
 
   return router;
 };

@@ -59,4 +59,6 @@ export interface IRepositories {
   getJobOfferByClientIdRepository(
     freelancerId: string
   ): Promise<IJobOffer[] | null>;
+  getTotalNumberOfJobPostsRepository(): Promise<number>;
+  deleteJobPostRepository(id: string): Promise<boolean>;
 }

@@ -1,11 +1,10 @@
-import mongoose from "mongoose";
-import { PaymentModel } from "../model/paymentModel";
 import { IPayment } from "../../../../domain/interface/ITransaction";
+import { PaymentModel } from "../model/paymentModel";
 
 export const updatePaymentStatusRepository = async (
   paymentId: string,
-  status:string
-): Promise<void> => {
+  status: string
+): Promise<IPayment| null> => {
   try {
     console.log(
       paymentId,
@@ -15,12 +14,13 @@ export const updatePaymentStatusRepository = async (
     const updatedPayment = await PaymentModel.findByIdAndUpdate(
       paymentId,
       { status },
-      { updatedAt: new Date() }
-    ).lean();
+      { new: true, lean: true }
+    );
     console.log(
       updatedPayment,
       "consoling the updated payment from repository"
     );
+    return updatedPayment;
   } catch (error) {
     console.error("Error in updating payment status:", error);
     throw error;

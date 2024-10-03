@@ -21,6 +21,8 @@ const deleteSkillController_1 = require("./skill/deleteSkillController");
 const getSkillsController_1 = require("./skill/getSkillsController");
 const updateSkillController_1 = require("./skill/updateSkillController.");
 const getJobOfferByClientIdController_1 = require("./jobOffer/getJobOfferByClientIdController");
+const getTotalNumberOfJobPostController_1 = require("./jobPost/getTotalNumberOfJobPostController");
+const deleteJobPostController_1 = require("./jobPost/deleteJobPostController");
 const controllers = (dependencies) => {
     return {
         addSkill: (0, addSkillController_1.createSkill)(dependencies),
@@ -43,6 +45,8 @@ const controllers = (dependencies) => {
         getJobOfferByFreelancerId: (0, getJobOfferByFreelancerIdController_1.getJobOfferByFreelancerIdController)(dependencies),
         updateJobOfferStatus: (0, updateJobOfferStatusController_1.updateJobOfferStatusController)(dependencies),
         getJobOfferByClientId: (0, getJobOfferByClientIdController_1.getJobOfferByClientIdController)(dependencies),
+        getTotalNumberOfJobPost: (0, getTotalNumberOfJobPostController_1.getTotalNumberOfJobPostController)(dependencies),
+        deleteJobPost: (0, deleteJobPostController_1.deleteJobPostController)(dependencies)
     };
 };
 exports.controllers = controllers;

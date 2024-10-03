@@ -14,8 +14,9 @@ const paymentModel_1 = require("../model/paymentModel");
 const updatePaymentStatusRepository = (paymentId, status) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         console.log(paymentId, status, "consoling the payment id and status from the repository");
-        const updatedPayment = yield paymentModel_1.PaymentModel.findByIdAndUpdate(paymentId, { status }, { updatedAt: new Date() }).lean();
+        const updatedPayment = yield paymentModel_1.PaymentModel.findByIdAndUpdate(paymentId, { status }, { new: true, lean: true });
         console.log(updatedPayment, "consoling the updated payment from repository");
+        return updatedPayment;
     }
     catch (error) {
         console.error("Error in updating payment status:", error);

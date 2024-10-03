@@ -17,7 +17,7 @@ import { saveFreelancerSkillsAndCategory } from "../../infrastructure/database/m
 import { saveSkillsController } from "./saveSkillsController";
 import { postProfileController } from "./postProfileController";
 import { applyJobPostUseCase } from "../../application/useCases";
-import { applyJobPostController } from "./applyJobPost";
+import { applyJobPostController } from "./applyJobPostController";
 import { getSavedJobsController } from "./getSavedJobsController";
 import { saveJobController } from "./saveJobController";
 import { getFreelancerByIdController } from "./getFreelancerByIdController";
@@ -25,6 +25,7 @@ import { getInvitedFreelancersController } from "./getInvitedFreelancersControll
 import { updateJobInvitesController } from "./updateJobInvitesController";
 import { getAllClientsController } from "./getAllClientsController";
 import { getClientByIdController } from "./getClientByIdController";
+import { AdminDashboardController } from "./AdminDashboardController";
 
 export const controllers = (dependencies: IDependencies) => {
   return {
@@ -53,5 +54,6 @@ export const controllers = (dependencies: IDependencies) => {
     updateJobInvite: updateJobInvitesController(dependencies),
     getAllClient: getAllClientsController(dependencies),
     getClientById: getClientByIdController(dependencies),
+    getAdminDashboardData:AdminDashboardController(dependencies)
   };
 };

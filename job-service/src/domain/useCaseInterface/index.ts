@@ -15,4 +15,6 @@ export * from "./IGetJobInvitesUseCase";
 export * from "./ICreateJobOfferUseCase";
 export * from "./IGetJobOfferByIdUseCase";
 export * from "./IUpdateStatusJobOfferUseCase";
+export * from "./IDeleteJobPostUseCase";
+export * from "./IGetTotalNumberOfJobPostUseCase";
 

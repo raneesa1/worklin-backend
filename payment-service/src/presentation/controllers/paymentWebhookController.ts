@@ -2,6 +2,9 @@ import { Request, Response, NextFunction } from "express";
 import Stripe from "stripe";
 import { IDependencies } from "../../application/interfaces/IDependencies";
 import { dependencies } from "../../config/dependencies";
+import { sendPaymentConfirmation } from "../../infrastructure/rabbitMq/paymentConfirmationService";
+import { IPayment } from "../../domain/interface/ITransaction";
+import { getChannel } from "../../infrastructure/rabbitMq/rabbit.config";
 
 // Make sure this is your actual secret key
 const STRIPE_SECRET_KEY =
@@ -44,7 +47,19 @@ export const paymentWebhookController = (dependencies: IDependencies) => {
           const session = event.data.object as Stripe.Checkout.Session;
           console.log(session, "consoling the session of completed event");
           console.log("Session metadata:", session.metadata);
-          await handleSuccessfulPayment(session, updatePaymentStatusUseCase);
+          const updatedPayment = await handleSuccessfulPayment(
+            session,
+            updatePaymentStatusUseCase
+          );
+          if (updatedPayment && updatedPayment.offerId) {
+            const offerIdString = updatedPayment.offerId.toString();
+            console.log("sending to payment confirmation ");
+            await sendPaymentConfirmation(offerIdString);
+          } else {
+            console.log(
+              "Payment not found or offerId missing, skipping confirmation"
+            );
+          }
           break;
         }
         case "payment_intent.payment_failed": {
@@ -67,11 +82,19 @@ export const paymentWebhookController = (dependencies: IDependencies) => {
 async function handleSuccessfulPayment(
   session: Stripe.Checkout.Session,
   updatePaymentStatusUseCase: any
-) {
+): Promise<IPayment | null> {
   const paymentId = session.metadata?.paymentId;
   if (paymentId) {
-    await updatePaymentStatusUseCase(dependencies).execute(paymentId, "paid");
+    const handleSuccessPaymentReturn = await updatePaymentStatusUseCase(
+      dependencies
+    ).execute(paymentId, "paid");
+    console.log(
+      handleSuccessPaymentReturn,
+      "consoling the handleSuccessPaymentReturn ======>>>>"
+    );
+    return handleSuccessPaymentReturn;
   }
+  return null;
 }
 
 async function handleFailedPayment(
@@ -85,4 +108,18 @@ async function handleFailedPayment(
       "paymentFailed"
     );
   }
+}
+async function sendToJobService(offerId: string) {
+  const channel = await getChannel();
+  if (!channel) {
+    console.error("RabbitMQ channel not available after reconnect attempt");
+    return;
+  }
+
+  const message = JSON.stringify({ offerId, status: "paid" });
+  const routingKey = "payment.confirmation";
+  const exchange = "paymentServiceExchange";
+
+  channel.publish(exchange, routingKey, Buffer.from(message));
+  console.log(`Payment confirmation message sent: ${message}`);
 }

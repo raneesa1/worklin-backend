@@ -4,4 +4,4 @@ import * as repositories from "../infrastructure/database/mongoDb/repositories";
 export const dependencies: IDependencies = {
   useCases,
   repositories,
-};
+}

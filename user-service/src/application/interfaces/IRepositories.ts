@@ -13,7 +13,7 @@ import { BioData } from "../../domain/interface/IBioData";
 import { Category, Skill, SubCategory } from "../../domain/interface/ICategory";
 import { IEducation } from "../../domain/interface/IEducation";
 import { IProfileData } from "../../domain/interface/IProfileData";
-import { IExperience } from "../../domain/useCaseInterface/Iexperience";
+import { IExperience } from "../../domain/entities/Iexperience";
 
 export interface IRepositories {
   saveUserToDb: (data: authEntity) => Promise<void>;
@@ -100,4 +100,7 @@ export interface IRepositories {
   ): Promise<FreelancerEntity | null>;
   getAllClientsRepository(): Promise<clientEntity[] | null>;
   getClientByIdRepository(clientId: string): Promise<clientEntity | null>;
+  getAdminDashboardDataRepository(
+    timeRange: string
+  ): Promise<AdminDashboardData>;
 }

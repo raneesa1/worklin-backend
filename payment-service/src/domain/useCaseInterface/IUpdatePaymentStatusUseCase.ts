@@ -1,5 +1,5 @@
-import { ITransaction } from "../interface/ITransaction";
+import { IPayment, ITransaction } from "../interface/ITransaction";
 
 export interface IUpdatePaymentStatusUseCase {
-  execute(paymentId: string, status: string): Promise<void>;
+  execute(paymentId: string, status: string): Promise<IPayment | null>;
 }
