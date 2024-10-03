@@ -10,7 +10,6 @@ RUN npm install typescript -g
 
 COPY . .
 
-
 RUN npm run build
 
 EXPOSE 3001
