@@ -1,18 +1,17 @@
-FROM  node:alpine
+FROM node:18-alpine
 
 WORKDIR /app
 
-COPY package*.json ./
+COPY package.json .
 
 RUN npm install
 
-COPY . .
+RUN npm install typescript -g
 
-RUN ls -al
+COPY . .
 
 RUN npm run build
 
-
-EXPOSE 3001
+EXPOSE 3004
 
 CMD [ "npm", "start" ]
