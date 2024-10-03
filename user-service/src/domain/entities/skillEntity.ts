@@ -20,7 +20,7 @@ export interface ISkill extends ISkillBase {
 }
 
 // Main skill entity interface (use this when working with Mongoose documents)
-export interface SkillEntity extends ISkillDocument {
+export interface skillEntity extends ISkillDocument {
   _id: Types.ObjectId;
   name: string;
   description?: string;
