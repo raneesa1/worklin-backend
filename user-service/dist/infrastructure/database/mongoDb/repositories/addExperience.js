@@ -12,19 +12,38 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.addExperience = void 0;
 const experienceModel_1 = require("../model/experienceModel");
 const freelancer_1 = require("../model/freelancer");
-const addExperience = (experience, userId // Pass the userId to update the freelancer's experience array
-) => __awaiter(void 0, void 0, void 0, function* () {
+const addExperience = (experience, userId) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const freelancer = yield freelancer_1.FreelancerModel.findById(userId);
         if (!freelancer) {
             throw new Error("Freelancer not found");
         }
-        // Save the new experience
+        // Create new experience document
         const newExperience = new experienceModel_1.ExperienceModel(experience);
-        yield newExperience.save();
-        freelancer.experience.push(newExperience._id);
+        const savedExperience = yield newExperience.save();
+        // Update freelancer's experience array
+        freelancer.experience.push(savedExperience._id);
         yield freelancer.save();
-        return newExperience.toObject();
+        // Type-safe conversion of the document to a plain object
+        const experienceObject = savedExperience.toObject();
+        // Ensure type safety when converting ObjectId to string
+        const returnExperience = {
+            _id: experienceObject._id.toString(),
+            userId: experienceObject.userId,
+            title: experienceObject.title,
+            company: experienceObject.company,
+            jobLocation: experienceObject.jobLocation,
+            country: experienceObject.country,
+            startDate: experienceObject.startDate,
+            endDate: experienceObject.endDate,
+            description: experienceObject.description,
+            startMonth: experienceObject.startMonth,
+            startYear: experienceObject.startYear,
+            endMonth: experienceObject.endMonth,
+            endYear: experienceObject.endYear,
+            isCurrentlyWorking: experienceObject.isCurrentlyWorking,
+        };
+        return returnExperience;
     }
     catch (error) {
         console.error("Error saving experience or updating freelancer:", error);

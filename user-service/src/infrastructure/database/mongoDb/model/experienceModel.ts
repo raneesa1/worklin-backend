@@ -1,7 +1,7 @@
-// experienceSchema.ts
-import { boolean, string } from "joi";
-import mongoose, { Schema, Document, model } from "mongoose";
-
+// src/infrastructure/database/mongoDb/model/experienceModel.ts
+import mongoose, { Schema } from "mongoose";
+import { IExperienceDocument } from "../../../../domain/entities";
+ 
 const experienceSchema = new Schema(
   {
     userId: { type: String, required: true },
@@ -23,4 +23,7 @@ const experienceSchema = new Schema(
   }
 );
 
-export const ExperienceModel = model("Experience", experienceSchema);
+export const ExperienceModel = mongoose.model<IExperienceDocument>(
+  "Experience",
+  experienceSchema
+);
