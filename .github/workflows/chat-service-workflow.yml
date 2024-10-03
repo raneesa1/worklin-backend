@@ -32,6 +32,6 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           context: ./chat-service/
-          platforms: linux/amr64
+          platforms: linux/amd64,linux/arm64
           push: true
           tags: raneesa/worklin-chat-service:latest
