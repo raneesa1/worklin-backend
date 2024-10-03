@@ -15,7 +15,7 @@ export interface IUseCases {
   getPaymentDetailsUseCase: (
     dependencies: IDependencies
   ) => IGetPaymentDetailsUseCase;
-updatePaymentStatusUseCase: (
+  updatePaymentStatusUseCase: (
     dependencies: IDependencies
-  ) => Promise<IPayment|null>;
+  ) => IUpdatePaymentStatusUseCase;
 }

@@ -13,7 +13,7 @@ exports.publishToQueue = publishToQueue;
 const rabbitmq_config_1 = require("./rabbitmq.config");
 function publishToQueue(queue, message) {
     return __awaiter(this, void 0, void 0, function* () {
-        const channel = (0, rabbitmq_config_1.getChannel)();
+        const channel = yield (0, rabbitmq_config_1.getChannel)(); // Await the channel
         if (!channel) {
             throw new Error("RabbitMQ channel not available");
         }

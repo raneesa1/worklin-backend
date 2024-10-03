@@ -15,20 +15,30 @@ export const deleteJobPostController = (dependencies: IDependencies) => {
   ): Promise<void> => {
     try {
       const { jobId } = req.body;
+
       // Validate the ID parameter
       if (!jobId) {
-        res.status(400).json({ message: "category ID is required." });
+        res.status(400).json({ message: "Job ID is required." });
         return;
       }
-      // Directly call the JobPostUseCase with jobPost as the argument
-      const deleted = await deleteJobPostUseCase(dependencies).execute(jobId);
 
-      console.log(deleted, "consoling the created job post");
-      res.status(201).json({
-        message: "deleted job successfully!",
-      });
+      // Create the use case instance by passing dependencies
+      const deleteUseCase = deleteJobPostUseCase(jobId);
+
+      // Call the execute method with jobId as the argument
+      const deleted = await deleteUseCase.execute(jobId);
+
+      if (deleted) {
+        res.status(200).json({
+          message: "Deleted job successfully!",
+        });
+      } else {
+        res.status(404).json({
+          message: "Job not found or already deleted",
+        });
+      }
     } catch (error) {
-      console.error("Error in creating job post controller:", error);
+      console.error("Error in deleting job post controller:", error);
       res.status(500).json({ message: "Internal Server Error" });
     }
   };

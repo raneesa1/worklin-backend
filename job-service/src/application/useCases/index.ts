@@ -22,6 +22,7 @@ export * from "./getJobOfferByFreelancerIdUseCase";
 export * from "./acceptJobOfferUseCase";
 export * from "./getJobOfferByClientIdUseCase";
 export * from "./getTotalNumberOfJobPostUseCase";
+export * from "./deleteJobPostUseCase";
 
 
 

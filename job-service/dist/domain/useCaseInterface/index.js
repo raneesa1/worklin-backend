@@ -33,3 +33,4 @@ __exportStar(require("./IGetJobOfferByIdUseCase"), exports);
 __exportStar(require("./IUpdateStatusJobOfferUseCase"), exports);
 __exportStar(require("./IDeleteJobPostUseCase"), exports);
 __exportStar(require("./IGetTotalNumberOfJobPostUseCase"), exports);
+__exportStar(require("./IDeleteJobPostUseCase"), exports);

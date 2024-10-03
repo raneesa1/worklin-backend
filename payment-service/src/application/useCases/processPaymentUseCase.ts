@@ -1,4 +1,5 @@
-import { ITransaction } from "../../domain/interface/ITransaction";
+import mongoose from "mongoose";
+import { IPayment, ITransaction } from "../../domain/interface/ITransaction";
 import { IHandlePaymentUseCase } from "../../domain/useCaseInterface";
 import { IDependencies } from "../interfaces/IDependencies";
 
@@ -24,15 +25,22 @@ export const processPaymentUseCase = (
       throw new Error(`Invalid payment data: ${JSON.stringify(paymentData)}`);
     }
 
+    const payment: IPayment = {
+      ...paymentData,
+      offerId: paymentData.offerId, // Convert ObjectId to string
+      dueDate: paymentData.dueDate || new Date(), // Provide a default value if dueDate is undefined
+    };
+
     // Process the payment
     console.log(
       `Processing payment of ${paymentData.totalAmount} from ${paymentData.sender.senderId} to ${paymentData.receiver.receiverId}`
     );
 
-    await repositories.createPaymentRepository(paymentData);
+    await repositories.createPaymentRepository(payment);
+     const offerIdString: string = (paymentData.offerId as unknown as mongoose.Types.ObjectId).toString();
 
     await repositories.updatePaymentStatusRepository(
-      paymentData.offerId,
+      offerIdString,
       "processed"
     );
 
@@ -72,8 +80,12 @@ export const processPaymentUseCase = (
           `Error processing payment for offer ${paymentData.offerId}:`,
           error
         );
+         const offerIdString: string = (
+           paymentData.offerId as unknown as mongoose.Types.ObjectId
+         ).toString();
+
         await repositories.updatePaymentStatusRepository(
-          paymentData.offerId,
+          offerIdString,
           "failed"
         );
         throw new Error(`Payment processing failed: ${error.message}`);

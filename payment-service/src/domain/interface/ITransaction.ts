@@ -1,7 +1,7 @@
 import mongoose, { ObjectId } from "mongoose";
 
 export interface ITransaction {
-  offerId: string;
+  offerId:  ObjectId;
   contractTitle: string;
   sender: {
     type: string;
@@ -15,6 +15,7 @@ export interface ITransaction {
   };
   status: "issued" | "due" | "overdue" | "paid";
   totalAmount: number;
+  dueDate?: Date;
 }
 
 // src/domain/entities/payment.ts
@@ -31,7 +32,7 @@ export interface IPayment {
     accountType: string;
     receiverId: string;
   };
-  status: "issued" | "due" | "overdue" | "completed";
+  status: "issued" | "due" | "overdue" | "paid";
   totalAmount: number;
   dueDate: Date;
   createdAt?: Date;

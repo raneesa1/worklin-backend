@@ -1,7 +1,7 @@
 import { IPayment, ITransaction } from "../../domain/interface/ITransaction";
 
 export interface IRepositories {
-  createPaymentRepository: (paymentData: ITransaction) => Promise<IPayment>;
+  createPaymentRepository: (paymentData: IPayment) => Promise<IPayment>;
   getTransactionByUserIdRepository: (userId: string) => Promise<IPayment[]>;
   updatePaymentStatusRepository: (
     paymentId: string,

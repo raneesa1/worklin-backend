@@ -23,10 +23,12 @@ const processPaymentUseCase = (dependencies) => {
             !paymentData.totalAmount) {
             throw new Error(`Invalid payment data: ${JSON.stringify(paymentData)}`);
         }
+        const payment = Object.assign(Object.assign({}, paymentData), { offerId: paymentData.offerId, dueDate: paymentData.dueDate || new Date() });
         // Process the payment
         console.log(`Processing payment of ${paymentData.totalAmount} from ${paymentData.sender.senderId} to ${paymentData.receiver.receiverId}`);
-        yield repositories.createPaymentRepository(paymentData);
-        yield repositories.updatePaymentStatusRepository(paymentData.offerId, "processed");
+        yield repositories.createPaymentRepository(payment);
+        const offerIdString = paymentData.offerId.toString();
+        yield repositories.updatePaymentStatusRepository(offerIdString, "processed");
         console.log(`Payment for offer ${paymentData.offerId} processed successfully`);
     });
     return {
@@ -56,7 +58,8 @@ const processPaymentUseCase = (dependencies) => {
             }
             catch (error) {
                 console.error(`Error processing payment for offer ${paymentData.offerId}:`, error);
-                yield repositories.updatePaymentStatusRepository(paymentData.offerId, "failed");
+                const offerIdString = paymentData.offerId.toString();
+                yield repositories.updatePaymentStatusRepository(offerIdString, "failed");
                 throw new Error(`Payment processing failed: ${error.message}`);
             }
         }),

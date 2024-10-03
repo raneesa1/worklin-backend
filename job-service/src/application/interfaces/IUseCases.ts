@@ -78,6 +78,8 @@ export interface IUseCases {
   getJobOfferByClientIdUseCase: (
     dependencies: IDependencies
   ) => IGetJobOfferByIdUseCase;
-  getTotalNumberOfJobPostUseCase: () => IGetTotalNumberOfJobPostUseCase;
-  deleteJobPostUseCase: (id: string) => IDeleteJobPostUseCase
+  getTotalNumberOfJobPostUseCase: (
+    dependencies: IDependencies
+  ) => IGetTotalNumberOfJobPostUseCase;
+  deleteJobPostUseCase: (dependencies: IDependencies) => IDeleteJobPostUseCase;
 }

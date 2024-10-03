@@ -1,7 +1,6 @@
 // deleteSkillUseCase.ts
 import { IDependencies } from "../../application/interfaces/IDependencies";
-import { Category } from "../../domain/entities/category";
-
+ 
 export const deleteJobPostUseCase = (dependencies: IDependencies) => {
   const { repositories } = dependencies;
 

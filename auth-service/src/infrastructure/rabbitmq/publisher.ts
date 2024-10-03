@@ -1,10 +1,12 @@
+import { Channel } from "amqplib";
 import { getChannel } from "./rabbitmq.config";
 
 export async function publishToQueue(
   queue: string,
   message: any
 ): Promise<void> {
-  const channel = getChannel();
+  const channel: Channel | null = await getChannel(); // Await the channel
+  
   if (!channel) {
     throw new Error("RabbitMQ channel not available");
   }
