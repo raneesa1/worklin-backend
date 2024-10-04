@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: worklin-project-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: worklin-project-service
+  template:
+    metadata:
+      labels:
+        app: worklin-project-service
+    spec:
+      containers:
+        - name: worklin-project-service
+          image: raneesa/worklin-project-service:latest
+          envFrom:
+            - configMapRef:
+                name: project-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: worklin-project-service
+spec:
+  selector:
+    app: worklin-project-service
+  ports:
+    - protocol: TCP
+      port: 4001
+      targetPort: 4001

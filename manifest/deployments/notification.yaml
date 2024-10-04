@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: worklin-notification-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: worklin-notification-service
+  template:
+    metadata:
+      labels:
+        app: worklin-notification-service
+    spec:
+      containers:
+        - name: worklin-notification-service
+          image: raneesa/worklin-notification-service:latest
+          envFrom:
+            - configMapRef:
+                name: notification-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: worklin-notification-service
+spec:
+  selector:
+    app: worklin-notification-service
+  ports:
+    - protocol: TCP
+      port: 4001
+      targetPort: 4001
