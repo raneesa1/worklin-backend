@@ -22,7 +22,8 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
-app.use("/", userRoutes(dependencies));
+app.use("/chat", userRoutes(dependencies));
+// app.use("/", userRoutes(dependencies));
 
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   console.error(err);

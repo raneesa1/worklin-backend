@@ -1,0 +1,64 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-controller
+  annotations:
+    nginx.ingress.kubernetes.io/use-regex: "true"
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    nginx.ingress.kubernetes.io/enable-cors: "true"
+    nginx.ingress.kubernetes.io/cors-allow-origin: "https://worklin-frontend.vercel.app"
+spec:
+  ingressClassName: webapprouting.kubernetes.azure.com
+  rules:
+    - host: arooma.shop
+      http:
+        paths:
+          - path: /auth
+            pathType: Prefix
+            backend:
+              service:
+                name: worklin-auth-service
+                port:
+                  number: 3001
+          - path: /chat
+            pathType: Prefix
+            backend:
+              service:
+                name: worklin-chat-service
+                port:
+                  number: 3004
+          - path: /socket.io
+            pathType: Prefix
+            backend:
+              service:
+                name: worklin-chat-service
+                port:
+                  number: 3004
+          - path: /job
+            pathType: Prefix
+            backend:
+              service:
+                name: worklin-job-service
+                port:
+                  number: 3003
+          - path: /notification
+            pathType: Prefix
+            backend:
+              service:
+                name: worklin-notification-service
+                port:
+                  number: 3006
+          - path: /payment
+            pathType: Prefix
+            backend:
+              service:
+                name: worklin-payment-service
+                port:
+                  number: 3005
+          - path: /user
+            pathType: Prefix
+            backend:
+              service:
+                name: worklin-user-service
+                port:
+                  number: 3002

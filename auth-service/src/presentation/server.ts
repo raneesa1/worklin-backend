@@ -22,7 +22,8 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
-app.use("/", authRoutes(dependencies));
+app.use("/auth", authRoutes(dependencies));
+// app.use("/", authRoutes(dependencies));
 
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   console.error(err);

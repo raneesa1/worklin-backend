@@ -27,7 +27,8 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
-app.use("/", skillRoutes(dependencies));
+// app.use("/", skillRoutes(dependencies));
+app.use("/job", skillRoutes(dependencies));
 
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   console.error(err);

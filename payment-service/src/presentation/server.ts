@@ -45,7 +45,8 @@ app.post(
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use("/", paymentRoutes(dependencies));
+// app.use("/", paymentRoutes(dependencies));
+app.use("/payment", paymentRoutes(dependencies));
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   console.error(err);
   const errorResponse = {
