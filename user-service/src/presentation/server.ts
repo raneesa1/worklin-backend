@@ -26,8 +26,8 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
-app.use("/", userRoutes(dependencies));
-
+// app.use("/", userRoutes(dependencies));
+app.use("/user", userRoutes(dependencies));
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   console.error(err);
   const errorResponse = {
@@ -42,7 +42,7 @@ const startServer = async () => {
     await connectRabbitMQ();
     await consumeMessages("userQueue", dependencies);
     await consumeInvites("inviteQueue", dependencies);
-    await setupHireInfoConsumer() // Add this line
+    await setupHireInfoConsumer(); // Add this line
     app.listen(PORT, () => {
       console.log(`User service running on port ${PORT}`);
     });
