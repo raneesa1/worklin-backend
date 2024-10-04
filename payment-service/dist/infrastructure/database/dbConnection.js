@@ -14,7 +14,7 @@ require("dotenv").config();
 const uri = process.env.MONGO_URL;
 exports.default = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        yield mongoose.connect("mongodb://127.0.0.1:27017/worklin_payment");
+        yield mongoose.connect(uri);
         console.log(`MongoDB connected successfully!`);
     }
     catch (error) {

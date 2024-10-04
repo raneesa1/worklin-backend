@@ -7,8 +7,13 @@ export async function connectRabbitMQ(
   retries = 5,
   delay = 5000
 ): Promise<void> {
+  const rabbitMqUrl = process.env.RABBITMQ_URL;
+  if (!rabbitMqUrl) {
+    throw new Error("RABBITMQ_URL environment variable is not set.");
+  }
+
   try {
-    const connection = await amqp.connect("amqp://127.0.0.1:5672", {
+    const connection = await amqp.connect(rabbitMqUrl, {
       heartbeat: 60, // Set heartbeat to 60 seconds
     });
     channel = await connection.createChannel();

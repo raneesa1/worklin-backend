@@ -5,10 +5,14 @@ export async function sendInvitationToQueue(
   invitationData: IInviteFreelancer
 ): Promise<void> {
   try {
-    const connection = await amqp.connect("amqp://127.0.0.1:5672");
+    const rabbitMqUrl = process.env.RABBITMQ_URL;
+    if (!rabbitMqUrl) {
+      throw new Error("RABBITMQ_URL environment variable is not set.");
+    }
+
+    const connection = await amqp.connect(rabbitMqUrl);
     const channel = await connection.createChannel();
     const exchange = "userManagementExchange";
-
 
     await channel.assertExchange(exchange, "direct", { durable: true });
 

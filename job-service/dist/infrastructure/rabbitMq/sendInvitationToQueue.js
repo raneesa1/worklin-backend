@@ -17,7 +17,11 @@ const amqplib_1 = __importDefault(require("amqplib"));
 function sendInvitationToQueue(invitationData) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const connection = yield amqplib_1.default.connect("amqp://127.0.0.1:5672");
+            const rabbitMqUrl = process.env.RABBITMQ_URL;
+            if (!rabbitMqUrl) {
+                throw new Error("RABBITMQ_URL environment variable is not set.");
+            }
+            const connection = yield amqplib_1.default.connect(rabbitMqUrl);
             const channel = yield connection.createChannel();
             const exchange = "userManagementExchange";
             yield channel.assertExchange(exchange, "direct", { durable: true });

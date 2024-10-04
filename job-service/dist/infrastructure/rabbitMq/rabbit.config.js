@@ -20,7 +20,11 @@ let isConnecting = false;
 function connectRabbitMQ() {
     return __awaiter(this, arguments, void 0, function* (retries = 5, delay = 5000) {
         try {
-            const connection = yield amqplib_1.default.connect("amqp://127.0.0.1:5672", {
+            const rabbitMqUrl = process.env.RABBITMQ_URL;
+            if (!rabbitMqUrl) {
+                throw new Error("RABBITMQ_URL environment variable is not set.");
+            }
+            const connection = yield amqplib_1.default.connect(rabbitMqUrl, {
                 heartbeat: 60, // Set heartbeat to 60 seconds
             });
             channel = yield connection.createChannel();

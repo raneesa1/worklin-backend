@@ -2,7 +2,6 @@ import amqp from "amqplib";
 import { IDependencies } from "../../application/interfaces/IDependencies";
 import { processPaymentUseCase } from "../../application/useCases";
 
-const RABBITMQ_URL = process.env.RABBITMQ_URL || "amqp://127.0.0.1:5672";
 const EXCHANGE_NAME = "paymentManagementExchange";
 const QUEUE_NAME = "paymentDataQueue";
 
@@ -10,7 +9,11 @@ export async function consumePaymentData(
   dependencies: IDependencies
 ): Promise<void> {
   try {
-    const connection = await amqp.connect(RABBITMQ_URL);
+    const rabbitMqUrl = process.env.RABBITMQ_URL;
+    if (!rabbitMqUrl) {
+      throw new Error("RABBITMQ_URL environment variable is not set.");
+    }
+    const connection = await amqp.connect(rabbitMqUrl);
     const channel = await connection.createChannel();
 
     await channel.assertExchange(EXCHANGE_NAME, "direct", { durable: true });

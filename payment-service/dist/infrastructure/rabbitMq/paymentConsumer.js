@@ -15,13 +15,16 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.consumePaymentData = consumePaymentData;
 const amqplib_1 = __importDefault(require("amqplib"));
 const useCases_1 = require("../../application/useCases");
-const RABBITMQ_URL = process.env.RABBITMQ_URL || "amqp://127.0.0.1:5672";
 const EXCHANGE_NAME = "paymentManagementExchange";
 const QUEUE_NAME = "paymentDataQueue";
 function consumePaymentData(dependencies) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const connection = yield amqplib_1.default.connect(RABBITMQ_URL);
+            const rabbitMqUrl = process.env.RABBITMQ_URL;
+            if (!rabbitMqUrl) {
+                throw new Error("RABBITMQ_URL environment variable is not set.");
+            }
+            const connection = yield amqplib_1.default.connect(rabbitMqUrl);
             const channel = yield connection.createChannel();
             yield channel.assertExchange(EXCHANGE_NAME, "direct", { durable: true });
             const { queue } = yield channel.assertQueue(QUEUE_NAME, { durable: true });
