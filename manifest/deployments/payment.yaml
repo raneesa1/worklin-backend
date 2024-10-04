@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: worklin-payment-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: worklin-payment-service
+  template:
+    metadata:
+      labels:
+        app: worklin-payment-service
+    spec:
+      containers:
+        - name: worklin-payment-service
+          image: raneesa/worklin-payment-service:latest
+          envFrom:
+            - configMapRef:
+                name: payment-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: worklin-payment-service
+spec:
+  selector:
+    app: worklin-payment-service
+  ports:
+    - protocol: TCP
+      port: 3005
+      targetPort: 3005

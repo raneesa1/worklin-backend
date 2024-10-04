@@ -28,5 +28,5 @@ spec:
     app: worklin-chat-service
   ports:
     - protocol: TCP
-      port: 4001
+      port: 3004
       targetPort: 4001

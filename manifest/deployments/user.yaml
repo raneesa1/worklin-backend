@@ -28,5 +28,5 @@ spec:
     app: worklin-user-service
   ports:
     - protocol: TCP
-      port: 4001
-      targetPort: 4001
+      port: 3002
+      targetPort: 3002

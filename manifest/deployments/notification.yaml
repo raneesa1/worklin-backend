@@ -28,5 +28,5 @@ spec:
     app: worklin-notification-service
   ports:
     - protocol: TCP
-      port: 4001
-      targetPort: 4001
+      port: 3006
+      targetPort: 3006
