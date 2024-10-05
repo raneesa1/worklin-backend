@@ -3,11 +3,15 @@ kind: Ingress
 metadata:
   name: ingress-controller
   annotations:
-    kubernetes.io/ingress.class: addon-http-application-routing
     nginx.ingress.kubernetes.io/use-regex: "true"
-    cert-manager.io/cluster-issuer: letsencrypt-prod
     nginx.ingress.kubernetes.io/enable-cors: "true"
     nginx.ingress.kubernetes.io/cors-allow-origin: "https://worklin-frontend.vercel.app"
+    nginx.ingress.kubernetes.io/cors-allow-methods: "GET, POST, PUT, DELETE, OPTIONS"
+    nginx.ingress.kubernetes.io/cors-allow-credentials: "true"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
+    nginx.ingress.kubernetes.io/proxy-connect-timeout: "3600"
+    nginx.ingress.kubernetes.io/websocket-services: "worklin-chat-service"
 spec:
   ingressClassName: webapprouting.kubernetes.azure.com
   rules:
@@ -63,3 +67,10 @@ spec:
                 name: worklin-user-service
                 port:
                   number: 3002
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: worklin-frontend-service
+                port:
+                  number: 4200
