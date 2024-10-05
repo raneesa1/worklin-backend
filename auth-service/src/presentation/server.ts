@@ -21,6 +21,9 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
+app.get("/health", (req, res) => {
+  res.status(200).json({ status: "OK" });
+});
 
 app.use("/auth", authRoutes(dependencies));
 // app.use("/", authRoutes(dependencies));
