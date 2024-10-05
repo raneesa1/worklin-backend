@@ -3,6 +3,7 @@ kind: Ingress
 metadata:
   name: ingress-controller
   annotations:
+    kubernetes.io/ingress.class: addon-http-application-routing
     nginx.ingress.kubernetes.io/use-regex: "true"
     cert-manager.io/cluster-issuer: letsencrypt-prod
     nginx.ingress.kubernetes.io/enable-cors: "true"
