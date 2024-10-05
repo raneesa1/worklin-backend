@@ -1,15 +1,14 @@
 {
   "name": "notification-service",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon src/index.ts",
-    "build": "tsc",
+   "build": "tsc",
     "start": "node dist/index.js",
     "start:dev": "concurrently --kill-others-on-fail \"npm run build\" \"npm run start\""
-  },
+ },
   "author": "",
   "license": "ISC",
   "dependencies": {
@@ -32,5 +31,7 @@
     "nodemon": "^3.1.4",
     "ts-node": "^10.9.2",
     "typescript": "^5.5.4"
-  }
+  },
+  "devDependencies": {},
+  "description": ""
 }
