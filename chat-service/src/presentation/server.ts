@@ -7,6 +7,10 @@ import { userRoutes } from "../infrastructure/routes/user.routes";
 import connectSocketIo from "../socket/socket";
 import { createServer } from "http";
 dotenv.config();
+import { logRetention } from "../utils/logRetention";
+import morgan from "morgan";
+import path from "path";
+import fs from "fs";
 
 const app: Application = express();
 const PORT: number = Number(process.env.PORT) || 3004;
@@ -22,6 +26,18 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
+const accessLogStream = fs.createWriteStream(
+  path.join(__dirname, "access.log"),
+  {
+    flags: "a",
+  }
+);
+
+app.use(
+  morgan("common", {
+    stream: accessLogStream,
+  })
+);
 app.use("/chat", userRoutes(dependencies));
 // app.use("/", userRoutes(dependencies));
 
@@ -40,6 +56,7 @@ const startServer = async () => {
 
     // Integrate Socket.io with the server
     connectSocketIo(server);
+    logRetention.setupLogRetentionSchedule();
 
     // await connectRabbitMQ();
     server.listen(PORT, () => {

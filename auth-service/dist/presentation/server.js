@@ -19,6 +19,10 @@ const cors_1 = __importDefault(require("cors"));
 const authRoutes_1 = require("../infrastructure/routes/authRoutes");
 const dependencies_1 = require("../config/dependencies");
 const rabbitmq_config_1 = require("../infrastructure/rabbitmq/rabbitmq.config");
+const morgan_1 = __importDefault(require("morgan"));
+const path_1 = __importDefault(require("path"));
+const fs_1 = __importDefault(require("fs"));
+const logRetention_1 = require("../utils/logRetention");
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 const PORT = Number(process.env.PORT) || 3001;
@@ -30,7 +34,17 @@ const corsOptions = {
     credentials: true,
 };
 app.use((0, cors_1.default)(corsOptions));
-app.use("/", (0, authRoutes_1.authRoutes)(dependencies_1.dependencies));
+const accessLogStream = fs_1.default.createWriteStream(path_1.default.join(__dirname, "access.log"), {
+    flags: "a",
+});
+app.use((0, morgan_1.default)("common", {
+    stream: accessLogStream,
+}));
+app.get("/health", (req, res) => {
+    res.status(200).json({ status: "OK" });
+});
+app.use("/auth", (0, authRoutes_1.authRoutes)(dependencies_1.dependencies));
+// app.use("/", authRoutes(dependencies));
 app.use((err, req, res, next) => {
     console.error(err);
     const errorResponse = {
@@ -41,6 +55,7 @@ app.use((err, req, res, next) => {
 const startServer = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
         yield (0, rabbitmq_config_1.connectRabbitMQ)();
+        logRetention_1.logRetention.setupLogRetentionSchedule();
         app.listen(PORT, () => {
             console.log(`Connected to auth service on port ${PORT}`);
         });

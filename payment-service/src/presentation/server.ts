@@ -8,6 +8,10 @@ import { dependencies } from "../config/dependencies";
 import { consumePaymentData } from "../infrastructure/rabbitMq/paymentConsumer";
 import { schedulePaymentStatusUpdates } from "../infrastructure/database/mongoDB/model/paymentModel";
 import { paymentWebhookController } from "./controllers/paymentWebhookController";
+import { logRetention } from "../utils/logRetention";
+import morgan from "morgan";
+import path from "path";
+import fs from "fs";
 
 dotenv.config();
 
@@ -24,11 +28,6 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 app.use((req, res, next) => {
-  console.log(`Received ${req.method} request to ${req.url}`);
-  next();
-});
-
-app.use((req, res, next) => {
   if (req.originalUrl === "/webhook") {
     next();
   } else {
@@ -40,6 +39,19 @@ app.post(
   "/webhook",
   express.raw({ type: "application/json" }),
   paymentWebhookController(dependencies)
+);
+
+const accessLogStream = fs.createWriteStream(
+  path.join(__dirname, "access.log"),
+  {
+    flags: "a",
+  }
+);
+
+app.use(
+  morgan("common", {
+    stream: accessLogStream,
+  })
 );
 
 app.use(express.json());
@@ -61,6 +73,7 @@ const startServer = async () => {
     await getChannel();
     await consumePaymentData(dependencies);
     schedulePaymentStatusUpdates();
+    logRetention.setupLogRetentionSchedule();
 
     app.listen(PORT, () => {
       console.log(`payment service running on port ${PORT}`);

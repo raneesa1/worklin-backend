@@ -10,6 +10,10 @@ import { consumeJobInviteUpdates } from "../infrastructure/rabbitMq/consumeJobIn
 import { scheduleOfferDeletion } from "../infrastructure/database/mongoDB/model/jobOfferModel";
 import { setupPaymentConfirmationConsumer } from "../infrastructure/rabbitMq/consumers/paymentConfirmationConsumer";
 // import { consumeJobRequests } from "../infrastructure/rabbitMq/consumeJobRequests";
+import morgan from "morgan";
+import path from "path";
+import fs from "fs";
+import { logRetention } from "../utils/logRetention";
 
 dotenv.config();
 
@@ -26,6 +30,19 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
+
+const accessLogStream = fs.createWriteStream(
+  path.join(__dirname, "access.log"),
+  {
+    flags: "a",
+  }
+);
+
+app.use(
+  morgan("common", {
+    stream: accessLogStream,
+  })
+);
 
 // app.use("/", skillRoutes(dependencies));
 app.use("/job", skillRoutes(dependencies));
@@ -46,6 +63,7 @@ const startServer = async () => {
     await consumeJobInviteUpdates("jobApplicationQueue", dependencies);
     await setupPaymentConfirmationConsumer();
     scheduleOfferDeletion();
+    logRetention.setupLogRetentionSchedule();
 
     app.listen(PORT, () => {
       console.log(`Job service running on port ${PORT}`);

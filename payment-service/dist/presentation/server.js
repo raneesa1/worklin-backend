@@ -22,6 +22,10 @@ const dependencies_1 = require("../config/dependencies");
 const paymentConsumer_1 = require("../infrastructure/rabbitMq/paymentConsumer");
 const paymentModel_1 = require("../infrastructure/database/mongoDB/model/paymentModel");
 const paymentWebhookController_1 = require("./controllers/paymentWebhookController");
+const logRetention_1 = require("../utils/logRetention");
+const morgan_1 = __importDefault(require("morgan"));
+const path_1 = __importDefault(require("path"));
+const fs_1 = __importDefault(require("fs"));
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 const PORT = Number(process.env.PORT) || 3005;
@@ -32,10 +36,6 @@ const corsOptions = {
 };
 app.use((0, cors_1.default)(corsOptions));
 app.use((req, res, next) => {
-    console.log(`Received ${req.method} request to ${req.url}`);
-    next();
-});
-app.use((req, res, next) => {
     if (req.originalUrl === "/webhook") {
         next();
     }
@@ -44,9 +44,16 @@ app.use((req, res, next) => {
     }
 });
 app.post("/webhook", express_1.default.raw({ type: "application/json" }), (0, paymentWebhookController_1.paymentWebhookController)(dependencies_1.dependencies));
+const accessLogStream = fs_1.default.createWriteStream(path_1.default.join(__dirname, "access.log"), {
+    flags: "a",
+});
+app.use((0, morgan_1.default)("common", {
+    stream: accessLogStream,
+}));
 app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({ extended: true }));
-app.use("/", (0, paymentRoutes_1.paymentRoutes)(dependencies_1.dependencies));
+// app.use("/", paymentRoutes(dependencies));
+app.use("/payment", (0, paymentRoutes_1.paymentRoutes)(dependencies_1.dependencies));
 app.use((err, req, res, next) => {
     console.error(err);
     const errorResponse = {
@@ -59,6 +66,7 @@ const startServer = () => __awaiter(void 0, void 0, void 0, function* () {
         yield (0, rabbit_config_1.getChannel)();
         yield (0, paymentConsumer_1.consumePaymentData)(dependencies_1.dependencies);
         (0, paymentModel_1.schedulePaymentStatusUpdates)();
+        logRetention_1.logRetention.setupLogRetentionSchedule();
         app.listen(PORT, () => {
             console.log(`payment service running on port ${PORT}`);
         });

@@ -15,8 +15,7 @@ metadata:
 spec:
   ingressClassName: webapprouting.kubernetes.azure.com
   rules:
-    - host: arooma.shop
-      http:
+    - http:
         paths:
           - path: /auth
             pathType: Prefix

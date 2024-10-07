@@ -9,7 +9,7 @@
     "build": "tsc",
     "start": "node dist/index.js",
     "start:dev": "concurrently --kill-others-on-fail \"npm run build\" \"npm run start\""
- },
+  },
   "author": "",
   "license": "ISC",
   "dependencies": {
@@ -30,6 +30,7 @@
     "joi": "^17.13.3",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.5.1",
+    "morgan": "^1.10.0",
     "multer": "^1.4.5-lts.1",
     "multer-storage-cloudinary": "^4.0.0",
     "nodemon": "^3.1.4",
@@ -37,6 +38,7 @@
   },
   "devDependencies": {
     "@types/jsonwebtoken": "^9.0.6",
+    "@types/morgan": "^1.9.9",
     "@types/multer": "^1.4.11",
     "@types/node": "^22.1.0",
     "@types/streamifier": "^0.1.2",

@@ -9,8 +9,10 @@ import { dependencies } from "../config/dependencies";
 import { consumeInvites } from "../infrastructure/rabbitmq/consumeInvites";
 import { setupHireInfoConsumer } from "../infrastructure/rabbitmq/consumer/hireInfoConsumer";
 // import { consumeJobRequests } from "../infrastructure/rabbitmq/consumeJobRequests";
-
-dotenv.config();
+import morgan from "morgan";
+import path from "path";
+import fs from "fs";
+import { logRetention } from "../utils/logRetention";
 
 const app: Application = express();
 const PORT: number = Number(process.env.PORT) || 3002;
@@ -25,6 +27,20 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
+
+const accessLogStream = fs.createWriteStream(
+  path.join(__dirname, "access.log"),
+  {
+    flags: "a",
+  }
+);
+
+app.use(
+  morgan("common", {
+    stream: accessLogStream,
+  })
+);
+
 
 // app.use("/", userRoutes(dependencies));
 app.use("/user", userRoutes(dependencies));
@@ -43,6 +59,7 @@ const startServer = async () => {
     await consumeMessages("userQueue", dependencies);
     await consumeInvites("inviteQueue", dependencies);
     await setupHireInfoConsumer(); // Add this line
+    logRetention.setupLogRetentionSchedule();
     app.listen(PORT, () => {
       console.log(`User service running on port ${PORT}`);
     });
