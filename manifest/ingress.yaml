@@ -15,7 +15,7 @@ metadata:
 spec:
   ingressClassName: webapprouting.kubernetes.azure.com
   rules:
-    - host: worklin.shop
+    - host: www.worklin.shop
       http:
         paths:
           - path: /auth
