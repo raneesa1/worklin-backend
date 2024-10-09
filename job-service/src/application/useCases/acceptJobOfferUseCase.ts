@@ -77,6 +77,7 @@ export const acceptJobOfferUseCase = (dependencies: IDependencies) => {
     milestoneId?: string
   ) => {
     const adminId = process.env.ADMIN_ID || "67060d52af94d060bd98af98";
+    console.log(adminId, "consoling the admin id from accept job offer");
     if (!adminId) {
       throw new Error("Admin ID is not configured");
     }
