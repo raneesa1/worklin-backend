@@ -5,7 +5,8 @@ import { IDependencies } from "../../application/interfaces/IDependencies";
 const STRIPE_SECRET =
   process.env.STRIPE_SECRET ||
   "sk_test_51PyTWU06QK8ZKcxNMntPf025XOBtVL8QQPcwQhEBcSxhxCPv924zCndsSLnxfh9fBu3P9kSs8BvhblVFxvXaB5Sv00PrwpKiOa";
-const FRONTEND_URL = process.env.FRONTEND_URL;
+const FRONTEND_URL =
+  process.env.FRONTEND_URL || "https://worklin-frontend.vercel.app";
 console.log(STRIPE_SECRET, "consoling the stripe secret=========>>>");
 const stripe = new Stripe(STRIPE_SECRET as string, {
   apiVersion: "2024-06-20",
