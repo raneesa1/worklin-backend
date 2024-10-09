@@ -6,16 +6,12 @@ import { sendPaymentConfirmation } from "../../infrastructure/rabbitMq/paymentCo
 import { IPayment } from "../../domain/interface/ITransaction";
 import { getChannel } from "../../infrastructure/rabbitMq/rabbit.config";
 
-// Make sure this is your actual secret key
-const STRIPE_SECRET_KEY =
-  (process.env.STRIPE_SECRET_KEY as string) ||
-  "sk_test_51PyTWU06QK8ZKcxNMntPf025XOBtVL8QQPcwQhEBcSxhxCPv924zCndsSLnxfh9fBu3P9kSs8BvhblVFxvXaB5Sv00PrwpKiOa";
+const STRIPE_SECRET_KEY = process.env.STRIPE_SECRET_KEY as string;
+const STRIPE_WEBHOOK_SECRET = process.env.STRIPE_WEBHOOK_SECRET as string;
+
 const stripe = new Stripe(STRIPE_SECRET_KEY, {
   apiVersion: "2024-06-20",
 });
-
-const STRIPE_ENDPOINT_SECRET =
-  "whsec_2633ce1bdcd212f059fba110efd5291bd24f72031ed3f556cb6ad4ab4d43417e";
 
 export const paymentWebhookController = (dependencies: IDependencies) => {
   const {
@@ -34,7 +30,7 @@ export const paymentWebhookController = (dependencies: IDependencies) => {
       event = stripe.webhooks.constructEvent(
         req.body,
         stripeSignature.toString(),
-        STRIPE_ENDPOINT_SECRET
+        STRIPE_WEBHOOK_SECRET
       );
     } catch (err) {
       return res.status(400).send(`Webhook Error: ${(err as Error).message}`);
