@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import Stripe from "stripe";
 import { IDependencies } from "../../application/interfaces/IDependencies";
 
-const STRIPE_SECRET = process.env.STRIPE_SECRET;
+const STRIPE_SECRET = process.env.STRIPE_SECRET_KEY;
 const FRONTEND_URL = process.env.FRONTEND_URL;
 console.log(STRIPE_SECRET, "consoling the stripe secret=========>>>");
 const stripe = new Stripe(STRIPE_SECRET as string, {
