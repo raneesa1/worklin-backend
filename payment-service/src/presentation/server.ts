@@ -27,20 +27,6 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
-app.use((req, res, next) => {
-  if (req.originalUrl === "/webhook") {
-    next();
-  } else {
-    express.json()(req, res, next);
-  }
-});
-
-app.post(
-  "/webhook",
-  express.raw({ type: "application/json" }),
-  paymentWebhookController(dependencies)
-);
-
 const accessLogStream = fs.createWriteStream(
   path.join(__dirname, "access.log"),
   {
@@ -52,6 +38,12 @@ app.use(
   morgan("common", {
     stream: accessLogStream,
   })
+);
+
+app.post(
+  "/webhook",
+  express.raw({ type: "application/json" }),
+  paymentWebhookController(dependencies)
 );
 
 app.use(express.json());
