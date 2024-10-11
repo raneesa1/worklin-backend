@@ -42,10 +42,9 @@ app.use(
 
 app.post(
   "/webhook",
-  express.raw({ type: "application/json" }),
+  express.raw({ type: "application/json" }), // This must come before the route handler
   paymentWebhookController(dependencies)
 );
-
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 

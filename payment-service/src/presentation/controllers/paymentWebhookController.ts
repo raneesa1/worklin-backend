@@ -19,58 +19,74 @@ export const paymentWebhookController = (dependencies: IDependencies) => {
   } = dependencies;
 
   return async (req: Request, res: Response, next: NextFunction) => {
-    const stripeSignature = req.headers["stripe-signature"];
-    if (!stripeSignature) {
-      console.log("no stripe signature");
-      return res.status(400).send("No Stripe signature found");
+    // Important: Ensure we're working with raw body data
+    const payload = req.body;
+    const sig = req.headers["stripe-signature"];
+
+    if (!sig) {
+      console.log("No Stripe signature found");
+      return res.status(400).json({ error: "No Stripe signature found" });
     }
 
     let event: Stripe.Event;
+
     try {
+      // Verify the event with raw body
       event = stripe.webhooks.constructEvent(
-        req.body,
-        stripeSignature.toString(),
+        payload,
+        sig,
         STRIPE_WEBHOOK_SECRET
       );
     } catch (err) {
-      return res.status(400).send(`Webhook Error: ${(err as Error).message}`);
+      console.error("Webhook signature verification failed:", err);
+      return res.status(400).json({
+        error: `Webhook signature verification failed: ${
+          (err as Error).message
+        }`,
+      });
     }
 
     try {
       switch (event.type) {
         case "checkout.session.completed": {
-          console.log("inside the checkout session completed event");
           const session = event.data.object as Stripe.Checkout.Session;
-          console.log(session, "consoling the session of completed event");
-          console.log("Session metadata:", session.metadata);
+          console.log("Processing completed checkout session:", session.id);
+
           const updatedPayment = await handleSuccessfulPayment(
             session,
             updatePaymentStatusUseCase
           );
-          if (updatedPayment && updatedPayment.offerId) {
-            const offerIdString = updatedPayment.offerId.toString();
-            console.log("sending to payment confirmation ");
-            await sendPaymentConfirmation(offerIdString);
+
+          if (updatedPayment?.offerId) {
+            console.log(
+              `Sending payment confirmation for offer: ${updatedPayment.offerId}`
+            );
+            await sendPaymentConfirmation(updatedPayment.offerId.toString());
           } else {
             console.log(
-              "Payment not found or offerId missing, skipping confirmation"
+              "Payment processed but no offerId found for confirmation"
             );
           }
           break;
         }
+
         case "payment_intent.payment_failed": {
           const paymentIntent = event.data.object as Stripe.PaymentIntent;
+          console.log(`Processing failed payment: ${paymentIntent.id}`);
           await handleFailedPayment(paymentIntent, updatePaymentStatusUseCase);
           break;
         }
+
         default:
-          console.log(`Unhandled event type ${event.type}`); // Add this line
+          console.log(`Received unhandled event type: ${event.type}`);
       }
 
-      res.json({ received: true });
+      return res.json({ received: true });
     } catch (error) {
-      console.error("Error processing webhook:", error);
-      res.status(500).send("Error processing webhook");
+      console.error("Error processing webhook event:", error);
+      return res.status(500).json({
+        error: "Internal server error while processing webhook",
+      });
     }
   };
 };
