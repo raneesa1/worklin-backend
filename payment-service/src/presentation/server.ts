@@ -39,6 +39,7 @@ app.use(
   })
 );
 
+
 app.use((req, res, next) => {
   if (req.originalUrl === "/payment/webhook") {
     next();
@@ -47,6 +48,13 @@ app.use((req, res, next) => {
   }
 });
 
+app.use((req, res, next) => {
+  if (req.originalUrl === "/webhook") {
+    next();
+  } else {
+    express.json()(req, res, next);
+  }
+});
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
