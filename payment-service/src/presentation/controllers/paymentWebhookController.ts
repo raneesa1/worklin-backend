@@ -19,8 +19,6 @@ export const paymentWebhookController = (dependencies: IDependencies) => {
   } = dependencies;
 
   return async (req: Request, res: Response, next: NextFunction) => {
-    // Important: Ensure we're working with raw body data
-    const payload = req.body;
     const sig = req.headers["stripe-signature"];
 
     if (!sig) {
@@ -31,9 +29,9 @@ export const paymentWebhookController = (dependencies: IDependencies) => {
     let event: Stripe.Event;
 
     try {
-      // Verify the event with raw body
+      // Verify the event with the raw body
       event = stripe.webhooks.constructEvent(
-        payload,
+        req.body, // This should be the raw request body
         sig,
         STRIPE_WEBHOOK_SECRET
       );
@@ -70,6 +68,16 @@ export const paymentWebhookController = (dependencies: IDependencies) => {
           break;
         }
 
+        case "payment_intent.succeeded": {
+          const paymentIntent = event.data.object as Stripe.PaymentIntent;
+          console.log(`Processing succeeded payment: ${paymentIntent.id}`);
+          await handleSuccessfulPaymentIntent(
+            paymentIntent,
+            updatePaymentStatusUseCase
+          );
+          break;
+        }
+
         case "payment_intent.payment_failed": {
           const paymentIntent = event.data.object as Stripe.PaymentIntent;
           console.log(`Processing failed payment: ${paymentIntent.id}`);
@@ -97,9 +105,8 @@ async function handleSuccessfulPayment(
 ): Promise<IPayment | null> {
   const paymentId = session.metadata?.paymentId;
   if (paymentId) {
-    const handleSuccessPaymentReturn = await updatePaymentStatusUseCase(
-      dependencies
-    ).execute(paymentId, "paid");
+    const handleSuccessPaymentReturn =
+      await updatePaymentStatusUseCase().execute(paymentId, "paid");
     console.log(
       handleSuccessPaymentReturn,
       "consoling the handleSuccessPaymentReturn ======>>>>"
@@ -109,16 +116,23 @@ async function handleSuccessfulPayment(
   return null;
 }
 
+async function handleSuccessfulPaymentIntent(
+  paymentIntent: Stripe.PaymentIntent,
+  updatePaymentStatusUseCase: any
+) {
+  const paymentId = paymentIntent.metadata?.paymentId;
+  if (paymentId) {
+    await updatePaymentStatusUseCase().execute(paymentId, "paid");
+  }
+}
+
 async function handleFailedPayment(
   paymentIntent: Stripe.PaymentIntent,
   updatePaymentStatusUseCase: any
 ) {
   const paymentId = paymentIntent.metadata?.paymentId;
   if (paymentId) {
-    await updatePaymentStatusUseCase(dependencies).execute(
-      paymentId,
-      "paymentFailed"
-    );
+    await updatePaymentStatusUseCase().execute(paymentId, "paymentFailed");
   }
 }
 async function sendToJobService(offerId: string) {
