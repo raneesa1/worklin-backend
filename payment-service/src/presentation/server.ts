@@ -18,6 +18,7 @@ dotenv.config();
 const app: Application = express();
 const PORT: number = Number(process.env.PORT) || 3005;
 
+app.use(cookieParser());
 
 const corsOptions = {
   origin: "http://localhost:4200",
@@ -25,6 +26,20 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
+
+app.use((req, res, next) => {
+  if (req.originalUrl === "/webhook") {
+    next();
+  } else {
+    express.json()(req, res, next);
+  }
+});
+
+app.post(
+  "/webhook",
+  express.raw({ type: "application/json" }),
+  paymentWebhookController(dependencies)
+);
 
 const accessLogStream = fs.createWriteStream(
   path.join(__dirname, "access.log"),
@@ -39,26 +54,8 @@ app.use(
   })
 );
 
-
-app.use((req, res, next) => {
-  if (req.originalUrl === "/payment/webhook") {
-    next();
-  } else {
-    express.json()(req, res, next);
-  }
-});
-
-app.use((req, res, next) => {
-  if (req.originalUrl === "/webhook") {
-    next();
-  } else {
-    express.json()(req, res, next);
-  }
-});
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cookieParser());
-
 
 // app.use("/", paymentRoutes(dependencies));
 app.use("/payment", paymentRoutes(dependencies));
