@@ -9,7 +9,7 @@ const socket = require("socket.io");
 const connectSocketIo = (server: Server) => {
   const io: Socket = socket(server, {
     cors: {
-      origin: ["http://localhost:4200"],
+      origin: ["https://worklin-frontend.vercel.app"],
       credentials: true,
     },
   });
