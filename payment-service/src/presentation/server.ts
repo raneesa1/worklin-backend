@@ -40,7 +40,7 @@ app.use(
 );
 
 app.use((req, res, next) => {
-  if (req.originalUrl === "/api/payment/webhook") {
+  if (req.originalUrl === "/payment/webhook") {
     next();
   } else {
     express.json()(req, res, next);
