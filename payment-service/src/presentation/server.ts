@@ -28,7 +28,7 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 app.use((req, res, next) => {
-  if (req.originalUrl === "/webhook") {
+  if (req.originalUrl === "payment/webhook") {
     next();
   } else {
     express.json()(req, res, next);
@@ -36,7 +36,7 @@ app.use((req, res, next) => {
 });
 
 app.post(
-  "/webhook",
+  "payment/webhook",
   express.raw({ type: "application/json" }),
   paymentWebhookController(dependencies)
 );
