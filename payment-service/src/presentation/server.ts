@@ -28,6 +28,7 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 app.use((req, res, next) => {
+  console.log(req.originalUrl,'conosling the original url ')
   if (req.originalUrl === "/payment/webhook") {
     express.raw({ type: "application/json" })(req, res, next);
   } else {
