@@ -67,7 +67,23 @@ const connectSocketIo = (server: Server) => {
     });
     socket.on("initiate_call", ({ callerId, receiverId, callerName }) => {
       const receiverSocketId = userSocketMap[receiverId];
+      console.log(
+        receiverSocketId,
+        "receiverSocketIdreceiverSocketIdreceiverSocketIdreceiverSocketId before if condition"
+      );
       if (receiverSocketId) {
+        console.log(
+          receiverId,
+          "consoling the reveiver socket id ----------->>>>>>>>>>>>"
+        );
+        console.log(
+          receiverSocketId,
+          "consoling the receiverSocketIdreceiverSocketIdreceiverSocketIdreceiverSocketIdreceiverSocketIdreceiverSocketId socket id ----------->>>>>>>>>>>>"
+        );
+        console.log(
+          receiverId,
+          "consoling the reveiver socket id ----------->>>>>>>>>>>>"
+        );
         io.to(receiverSocketId).emit("incoming_call", { callerId, callerName });
       }
     });
