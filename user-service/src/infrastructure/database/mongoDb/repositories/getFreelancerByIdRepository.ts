@@ -1,6 +1,7 @@
 import { Types } from "mongoose";
 import { FreelancerEntity, IExperience } from "../../../../domain/entities";
 import { FreelancerModel } from "../model/freelancer";
+import { ClientModel } from "../model/client";
 
 export async function getFreelancerByIdRepository(
   freelancerId: string
@@ -25,13 +26,25 @@ export async function getFreelancerByIdRepository(
       })
       .exec();
 
-    console.log(freelancer, "consoling the freelancer");
-    if (!freelancer) {
-      throw new Error("no user found with this id");
+    if (freelancer) {
+      console.log(freelancer, "Freelancer found");
+      return freelancer;
     }
-    return freelancer;
+
+    // If no freelancer found, check if the user is a client
+    console.log("No freelancer found, checking for client...");
+    const client = await ClientModel.findById(freelancerId)
+      .populate("jobPost")
+      .exec();
+
+    if (client) {
+      console.log(client, "Client found");
+      return client;
+    }
+
+    throw new Error("No user found with this ID");
   } catch (error) {
-    console.error("Error fetching freelancer by userId:", error);
-    throw new Error("Error fetching experiences");
+    console.error("Error fetching user by ID:", error);
+    throw new Error("Error fetching user");
   }
 }
