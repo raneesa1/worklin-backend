@@ -14,6 +14,7 @@ import {
   IGetFreelancerByIdUseCase,
   IGetFreelancersUseCase,
   IGetInvitedFreelancersUseCase,
+  IGetJobOfferHiresUseCase,
   IGetSavedJobsUseCase,
   IPostProfileUseCase,
   IProcessInviteUseCase,
@@ -90,5 +91,8 @@ export interface IUseCases {
   getAllClientsUseCase: (dependencies: IDependencies) => IGetAllClientsUseCase;
   getAdminDashboardUseCase: (
     dependencies: IDependencies
-  ) => IGetAdminDashboardUseCase
+  ) => IGetAdminDashboardUseCase;
+  getJobOfferHiresUseCase: (
+    dependencies: IDependencies
+  ) => IGetJobOfferHiresUseCase;
 }

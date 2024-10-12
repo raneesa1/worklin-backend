@@ -44,3 +44,4 @@ __exportStar(require("./updateJobInviteRepository"), exports);
 __exportStar(require("./getAllClientsRepository"), exports);
 __exportStar(require("./getClientByIdRepository"), exports);
 __exportStar(require("./getAdminDashboardDataRepository"), exports);
+__exportStar(require("./getJobOfferHiresRepository"), exports);

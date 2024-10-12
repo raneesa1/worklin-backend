@@ -28,3 +28,4 @@ export * from "./updateJobInviteRepository";
 export * from "./getAllClientsRepository";
 export * from "./getClientByIdRepository";
 export * from "./getAdminDashboardDataRepository";
+export * from "./getJobOfferHiresRepository";

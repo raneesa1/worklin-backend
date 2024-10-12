@@ -27,3 +27,4 @@ export * from "./IUpdateJobInvitesUseCase";
 export * from "./IGetAllClientsUseCase";
 export * from "./IGetClientByIdUseCase";
 export * from "./IGetAdminDashboardUseCase";
+export * from "./IGetJobOfferHiresUseCase";

@@ -26,6 +26,7 @@ import { updateJobInvitesController } from "./updateJobInvitesController";
 import { getAllClientsController } from "./getAllClientsController";
 import { getClientByIdController } from "./getClientByIdController";
 import { AdminDashboardController } from "./AdminDashboardController";
+import { getJobOfferHiresController } from "./getjobOfferHiresController";
 
 export const controllers = (dependencies: IDependencies) => {
   return {
@@ -54,6 +55,7 @@ export const controllers = (dependencies: IDependencies) => {
     updateJobInvite: updateJobInvitesController(dependencies),
     getAllClient: getAllClientsController(dependencies),
     getClientById: getClientByIdController(dependencies),
-    getAdminDashboardData:AdminDashboardController(dependencies)
+    getAdminDashboardData:AdminDashboardController(dependencies),
+    getHiresFromJobPost:getJobOfferHiresController(dependencies)
   };
 };

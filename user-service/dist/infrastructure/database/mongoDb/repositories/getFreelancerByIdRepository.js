@@ -11,6 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getFreelancerByIdRepository = getFreelancerByIdRepository;
 const freelancer_1 = require("../model/freelancer");
+const client_1 = require("../model/client");
 function getFreelancerByIdRepository(freelancerId) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
@@ -29,15 +30,22 @@ function getFreelancerByIdRepository(freelancerId) {
                 },
             })
                 .exec();
-            console.log(freelancer, "consoling the freelancer");
-            if (!freelancer) {
-                throw new Error("no user found with this id");
+            if (freelancer) {
+                console.log(freelancer, "Freelancer found");
+                return freelancer;
             }
-            return freelancer;
+            // If no freelancer found, check if the user is a client
+            console.log("No freelancer found, checking for client...");
+            const client = yield client_1.ClientModel.findById(freelancerId).exec();
+            if (client) {
+                console.log(client, "Client found");
+                return client;
+            }
+            throw new Error("No user found with this ID");
         }
         catch (error) {
-            console.error("Error fetching freelancer by userId:", error);
-            throw new Error("Error fetching experiences");
+            console.error("Error fetching user by ID:", error);
+            throw new Error("Error fetching user");
         }
     });
 }

@@ -43,3 +43,4 @@ __exportStar(require("./IUpdateJobInvitesUseCase"), exports);
 __exportStar(require("./IGetAllClientsUseCase"), exports);
 __exportStar(require("./IGetClientByIdUseCase"), exports);
 __exportStar(require("./IGetAdminDashboardUseCase"), exports);
+__exportStar(require("./IGetJobOfferHiresUseCase"), exports);

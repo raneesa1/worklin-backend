@@ -103,4 +103,7 @@ export interface IRepositories {
   getAdminDashboardDataRepository(
     timeRange: string
   ): Promise<AdminDashboardData>;
+  getJobOfferHiresRepository(
+    jobId: string
+  ): Promise<Array<{ freelancer: FreelancerEntity }>>;
 }

@@ -26,6 +26,7 @@ const updateJobInvitesController_1 = require("./updateJobInvitesController");
 const getAllClientsController_1 = require("./getAllClientsController");
 const getClientByIdController_1 = require("./getClientByIdController");
 const AdminDashboardController_1 = require("./AdminDashboardController");
+const getjobOfferHiresController_1 = require("./getjobOfferHiresController");
 const controllers = (dependencies) => {
     return {
         resumeController: (0, resumeController_1.resumeController)(dependencies),
@@ -53,7 +54,8 @@ const controllers = (dependencies) => {
         updateJobInvite: (0, updateJobInvitesController_1.updateJobInvitesController)(dependencies),
         getAllClient: (0, getAllClientsController_1.getAllClientsController)(dependencies),
         getClientById: (0, getClientByIdController_1.getClientByIdController)(dependencies),
-        getAdminDashboardData: (0, AdminDashboardController_1.AdminDashboardController)(dependencies)
+        getAdminDashboardData: (0, AdminDashboardController_1.AdminDashboardController)(dependencies),
+        getHiresFromJobPost: (0, getjobOfferHiresController_1.getJobOfferHiresController)(dependencies)
     };
 };
 exports.controllers = controllers;

@@ -29,6 +29,10 @@ export async function setupHireInfoConsumer() {
         try {
           await updateClientWithNewHire(hireInfo);
           console.log(
+            hireInfo,
+            "consoling the hire info from user service------------------>>>>>>"
+          );
+          console.log(
             `Client updated with new hire from job service to user ßervice now in user service: ${JSON.stringify(
               hireInfo
             )}`

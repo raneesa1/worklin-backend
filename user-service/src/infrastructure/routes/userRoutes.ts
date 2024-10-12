@@ -36,6 +36,7 @@ export const userRoutes = (dependencies: IDependencies) => {
     getAllClient,
     getClientById,
     getAdminDashboardData,
+    getHiresFromJobPost,
   } = controllers(dependencies);
 
   const router = Router();
@@ -79,6 +80,7 @@ export const userRoutes = (dependencies: IDependencies) => {
   router.route("/getInvitedFreelancer/:jobId").get(getInvitedFreelancer);
   router.route("/updateInviteJob").post(updateJobInvite);
   router.route("/getAllClient").get(checkTokenAndRole(["admin"]), getAllClient);
+  router.route("/getHires/:jobId").get(getHiresFromJobPost);
   router
     .route("/getAdminDashboardData/:timeRange")
     .get(checkTokenAndRole(["admin"]), getAdminDashboardData);
