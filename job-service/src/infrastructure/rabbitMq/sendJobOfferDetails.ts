@@ -4,6 +4,10 @@ import { getChannel } from "./rabbit.config";
 export async function processJobOffer(content: any) {
   const jobOffer = await getJobOfferById(content.offerId);
 
+  console.log(
+    content,
+    "consoling the content from process job offer from job service"
+  );
   if (jobOffer) {
     const hireInfo = {
       clientId: jobOffer.clientId,
@@ -12,6 +16,7 @@ export async function processJobOffer(content: any) {
         title: jobOffer.title,
         description: jobOffer.description,
         totalAmount: jobOffer.totalAmount,
+        jobOfferId: jobOffer._id,
       },
     };
     console.log(
