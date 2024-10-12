@@ -33,9 +33,7 @@ export async function getFreelancerByIdRepository(
 
     // If no freelancer found, check if the user is a client
     console.log("No freelancer found, checking for client...");
-    const client = await ClientModel.findById(freelancerId)
-      .populate("jobPost")
-      .exec();
+    const client = await ClientModel.findById(freelancerId).exec();
 
     if (client) {
       console.log(client, "Client found");
