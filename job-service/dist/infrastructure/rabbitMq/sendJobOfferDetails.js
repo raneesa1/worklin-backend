@@ -15,6 +15,7 @@ const rabbit_config_1 = require("./rabbit.config");
 function processJobOffer(content) {
     return __awaiter(this, void 0, void 0, function* () {
         const jobOffer = yield (0, getJobOfferByIdRepository_1.getJobOfferById)(content.offerId);
+        console.log(content, "consoling the content from process job offer from job service");
         if (jobOffer) {
             const hireInfo = {
                 clientId: jobOffer.clientId,
@@ -23,6 +24,7 @@ function processJobOffer(content) {
                     title: jobOffer.title,
                     description: jobOffer.description,
                     totalAmount: jobOffer.totalAmount,
+                    jobOfferId: jobOffer._id,
                 },
             };
             console.log(hireInfo, "consoling the hire info from job service to the user service");

@@ -44,6 +44,7 @@ const acceptJobOfferUseCase = (dependencies) => {
     });
     const processPayment = (jobOffer, amount, dueDate, milestoneId) => __awaiter(void 0, void 0, void 0, function* () {
         const adminId = process.env.ADMIN_ID;
+        console.log(adminId, "consoling the admin id from accept job offer");
         if (!adminId) {
             throw new Error("Admin ID is not configured");
         }
