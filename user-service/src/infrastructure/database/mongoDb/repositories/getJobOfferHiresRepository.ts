@@ -5,7 +5,7 @@ export async function getJobOfferHiresRepository(
   jobId: string
 ): Promise<Array<{ freelancer: FreelancerEntity }>> {
   try {
-    const jobHires = await HireModel.find({ "jobDetails.jobOffer": jobId })
+    const jobHires = await HireModel.find({ "jobDetails.jobOfferId": jobId })
       .populate("freelancer")
       .lean()
       .exec();
