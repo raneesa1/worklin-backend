@@ -66,6 +66,7 @@ const connectSocketIo = (server: Server) => {
       }
     });
     socket.on("initiate_call", ({ callerId, receiverId, callerName }) => {
+      console.log(receiverId, "consoling the receiver id from socket");
       const receiverSocketId = userSocketMap[receiverId];
       console.log(
         receiverSocketId,
