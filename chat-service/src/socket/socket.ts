@@ -71,6 +71,7 @@ const connectSocketIo = (server: Server) => {
         receiverId,
         callerName,
       });
+      console.log("Current userSocketMap:::::::::::::::::", userSocketMap);
       const receiverSocketId = userSocketMap[receiverId];
       console.log("Receiver socket ID:", receiverSocketId);
 
