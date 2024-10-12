@@ -26,7 +26,7 @@ import { updateJobInvitesController } from "./updateJobInvitesController";
 import { getAllClientsController } from "./getAllClientsController";
 import { getClientByIdController } from "./getClientByIdController";
 import { AdminDashboardController } from "./AdminDashboardController";
-import { getJobOfferHiresController } from "./getjobOfferHiresController";
+import { getJobOfferHiresController } from "./getJobOfferHiresController";
 
 export const controllers = (dependencies: IDependencies) => {
   return {
