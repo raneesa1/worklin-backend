@@ -65,29 +65,28 @@ const connectSocketIo = (server: Server) => {
         console.error("Error processing new message:", error);
       }
     });
-    socket.on("initiate_call", ({ callerId, receiverId, callerName }) => {
-      console.log(receiverId, "consoling the receiver id from socket");
+    socket.on("initiate_call", async ({ callerId, receiverId, callerName }) => {
+      console.log("Received initiate_call event:", {
+        callerId,
+        receiverId,
+        callerName,
+      });
       const receiverSocketId = userSocketMap[receiverId];
-      console.log(
-        receiverSocketId,
-        "receiverSocketIdreceiverSocketIdreceiverSocketIdreceiverSocketId before if condition"
-      );
+      console.log("Receiver socket ID:", receiverSocketId);
+
       if (receiverSocketId) {
-        console.log(
-          receiverId,
-          "consoling the reveiver socket id ----------->>>>>>>>>>>>"
-        );
-        console.log(
-          receiverSocketId,
-          "consoling the receiverSocketIdreceiverSocketIdreceiverSocketIdreceiverSocketIdreceiverSocketIdreceiverSocketId socket id ----------->>>>>>>>>>>>"
-        );
-        console.log(
-          receiverId,
-          "consoling the reveiver socket id ----------->>>>>>>>>>>>"
-        );
+        console.log("Emitting incoming_call event to receiver");
         io.to(receiverSocketId).emit("incoming_call", { callerId, callerName });
+        socket.emit("call_initiated", { success: true });
+      } else {
+        console.log("Receiver not found or offline");
+        socket.emit("call_initiated", {
+          success: false,
+          error: "Receiver is offline or not found",
+        });
       }
     });
+
 
     socket.on("call_accepted", ({ callerId, accepterId, roomID }) => {
       const callerSocketId = userSocketMap[callerId];
