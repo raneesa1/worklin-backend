@@ -17,6 +17,7 @@ export async function processJobOffer(content: any) {
         description: jobOffer.description,
         totalAmount: jobOffer.totalAmount,
         jobOfferId: jobOffer._id,
+        relatedJobId:jobOffer.relatedJobId
       },
     };
     console.log(
